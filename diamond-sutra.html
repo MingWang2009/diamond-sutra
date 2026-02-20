@@ -1,0 +1,451 @@
+<!-- Chosen Palette: Zen Enlightenment (Warm Amber, Paper Beige, Deep Monk Red, Ink Black) -->
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金剛經註解 | 明法師兄淺釋</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+body {
+font-family: 'Noto Sans TC', sans-serif;
+background-color: #fdfbf7;
+color: #2d2d2d;
+}
+h1, h2, h3, h4, .serif {
+font-family: 'Noto Serif TC', serif;
+}
+.chart-container {
+position: relative;
+width: 100%;
+max-width: 500px;
+margin: 0 auto;
+height: 300px;
+max-height: 400px;
+}
+.lesson-card:hover {
+transform: translateY(-2px);
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.custom-scroll::-webkit-scrollbar { width: 6px; }
+.custom-scroll::-webkit-scrollbar-track { background: #f1f1f1; }
+.custom-scroll::-webkit-scrollbar-thumb { background: #d69e2e; border-radius: 3px; }
+.active-lesson {
+background-color: #fffbeb;
+border-left: 4px solid #b45309;
+}
+.fade-in {
+animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(10px); }
+to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body class="bg-[#fdfbf7] text-gray-800">
+
+<nav class="bg-[#8B0000] text-amber-50 shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex items-center">
+                <span class="text-2xl font-bold serif tracking-wider">金剛經註解</span>
+                <span class="ml-4 text-sm hidden sm:block opacity-80">東密明王殿 • 明法師兄淺釋</span>
+            </div>
+            <div class="flex space-x-4">
+                <button onclick="scrollToSection('context')" class="hover:text-amber-200 transition">法會背景</button>
+                <button onclick="scrollToSection('study')" class="hover:text-amber-200 transition">三十二課</button>
+                <button onclick="scrollToSection('concepts')" class="hover:text-amber-200 transition">核心概念</button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<header class="relative bg-amber-50 py-12 border-b border-amber-100">
+    <div class="max-w-5xl mx-auto px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            將金剛經融於生活
+        </h1>
+        <p class="text-xl text-gray-700 mb-8 max-w-3xl mx-auto leading-relaxed serif">
+            引導大眾心性修行、情緒管理、自我覺醒、覺照他人、廣修佛法、共證佛道。
+            <br>
+            <span class="text-base text-gray-500 mt-2 block">不動明王殿【明法師兄】口語化註解</span>
+        </p>
+        <div class="flex justify-center space-x-4">
+            <button onclick="scrollToSection('study')" class="bg-[#8B0000] text-white px-8 py-3 rounded-full shadow-md hover:bg-red-900 transition font-medium">
+                開始閱讀
+            </button>
+            <button onclick="document.getElementById('about-modal').classList.remove('hidden')" class="bg-white text-[#8B0000] border border-[#8B0000] px-8 py-3 rounded-full shadow-sm hover:bg-amber-50 transition font-medium">
+                關於明王殿
+            </button>
+        </div>
+    </div>
+</header>
+
+<section id="context" class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="mb-10 text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4 serif">釋迦牟尼佛說法時程</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                佛陀說法四十九年，分為五個時期。《金剛經》屬於第四時期的「般若經」，佔據了最長的二十二年，可見智慧法門之重要。
+            </p>
+        </div>
+        <div class="flex flex-col md:flex-row items-center justify-center gap-12">
+            <div class="w-full md:w-1/2 flex flex-col items-center">
+                <div class="chart-container">
+                    <canvas id="periodsChart"></canvas>
+                </div>
+                <p class="text-xs text-gray-400 mt-2 text-center">點擊圖表區塊可查看詳情</p>
+            </div>
+            <div class="w-full md:w-1/2 space-y-6">
+                <div id="period-detail" class="bg-amber-50 p-6 rounded-lg border-l-4 border-[#8B0000] shadow-sm">
+                    <h3 class="text-xl font-bold text-[#8B0000] mb-2" id="p-title">第四時：般若經</h3>
+                    <p class="text-gray-700 mb-2" id="p-desc">包含《金剛經》。此時期講述「緣起性空」的般若智慧，破除執著。</p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <span class="mr-4">⏱ 時間：22 年</span>
+                        <span>🎯 對象：熟習大乘之菩薩</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-gray-50 p-4 rounded text-center">
+                        <div class="text-2xl font-bold text-gray-800">22年</div>
+                        <div class="text-sm text-gray-500">般若說法時間</div>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded text-center">
+                        <div class="text-2xl font-bold text-gray-800">32課</div>
+                        <div class="text-sm text-gray-500">金剛經分段</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="study" class="py-12 bg-[#fdfbf7] border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2 serif">金剛經三十二課淺釋</h2>
+            <p class="text-gray-600">選擇章節以閱讀經文與註解。</p>
+        </div>
+        <div class="flex flex-col lg:flex-row gap-6 h-[800px] lg:h-[600px]">
+            <div class="w-full lg:w-1/4 flex flex-col bg-white rounded-lg shadow-md border border-gray-100 overflow-hidden">
+                <div class="p-4 bg-gray-50 border-b border-gray-200">
+                    <input type="text" id="lessonSearch" placeholder="搜尋課名或內容..." class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
+                </div>
+                <div id="lessonList" class="flex-1 overflow-y-auto custom-scroll p-2 space-y-1"></div>
+            </div>
+            <div class="w-full lg:w-3/4 bg-white rounded-lg shadow-md border border-gray-100 flex flex-col relative">
+                <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-white sticky top-0 z-10 rounded-t-lg">
+                    <h3 id="currentLessonTitle" class="text-2xl font-bold text-[#8B0000] serif">第一課：法會因由</h3>
+                    <div class="flex space-x-2">
+                        <button onclick="changeLesson(-1)" class="p-2 rounded-full hover:bg-gray-100 text-gray-500" title="上一課">&#8592;</button>
+                        <button onclick="changeLesson(1)" class="p-2 rounded-full hover:bg-gray-100 text-gray-500" title="下一課">&#8594;</button>
+                    </div>
+                </div>
+                <div id="lessonContentDisplay" class="flex-1 overflow-y-auto p-6 md:p-8 custom-scroll fade-in"></div>
+                <div class="p-4 bg-gray-50 border-t border-gray-100 text-center text-sm text-gray-500">
+                    提示：點擊「核心概念」可查看名詞解釋
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="concepts" class="py-16 bg-amber-100">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4 serif">佛學核心概念</h2>
+            <p class="text-gray-700">理解金剛經必須掌握的關鍵名詞，點擊卡片查看詳解。</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition cursor-pointer" onclick="toggleCard(this)">
+                <div class="flex items-center justify-between mb-4">
+                    <h4 class="text-xl font-bold text-[#8B0000]">離四相</h4>
+                    <span class="text-2xl">🌫️</span>
+                </div>
+                <p class="text-gray-600">我相、人相、眾生相、壽者相。金剛經的核心在於破除這四種執著。</p>
+                <div class="card-detail mt-4 pt-4 border-t border-gray-100 text-sm text-gray-700" style="display:none">
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li><strong>我相：</strong> 自私，以自我為中心。</li>
+                        <li><strong>人相：</strong> 比較心，愛計較。</li>
+                        <li><strong>眾生相：</strong> 貪嗔癡慢疑的集合。</li>
+                        <li><strong>壽者相：</strong> 對壽命或功德的執著與貪求。</li>
+                    </ul>
+                </div>
+                <div class="mt-4 text-center text-amber-600 text-sm font-medium toggle-hint">點擊展開 ▾</div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition cursor-pointer" onclick="toggleCard(this)">
+                <div class="flex items-center justify-between mb-4">
+                    <h4 class="text-xl font-bold text-[#8B0000]">掃三心</h4>
+                    <span class="text-2xl">🧹</span>
+                </div>
+                <p class="text-gray-600">過去心不可得，現在心不可得，未來心不可得。</p>
+                <div class="card-detail mt-4 pt-4 border-t border-gray-100 text-sm text-gray-700" style="display:none">
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li><strong>過去心：</strong> 過去的煩惱與榮耀應忘記。</li>
+                        <li><strong>現在心：</strong> 當下的執著應放下。</li>
+                        <li><strong>未來心：</strong> 未來的妄想不可強求。</li>
+                    </ul>
+                    <p class="mt-2">安住當下，清淨本心。</p>
+                </div>
+                <div class="mt-4 text-center text-amber-600 text-sm font-medium toggle-hint">點擊展開 ▾</div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition cursor-pointer" onclick="toggleCard(this)">
+                <div class="flex items-center justify-between mb-4">
+                    <h4 class="text-xl font-bold text-[#8B0000]">無為福勝</h4>
+                    <span class="text-2xl">✨</span>
+                </div>
+                <p class="text-gray-600">為何不住相佈施的福德比恆河沙數七寶佈施還大？</p>
+                <div class="card-detail mt-4 pt-4 border-t border-gray-100 text-sm text-gray-700" style="display:none">
+                    <p><strong>有相佈施：</strong> 如同將物品放入有限的容器，福德有限。</p>
+                    <p class="mt-2"><strong>無相佈施：</strong> 如同打破容器，讓功德流向無限的虛空法界。不執著功德，才是真功德。</p>
+                </div>
+                <div class="mt-4 text-center text-amber-600 text-sm font-medium toggle-hint">點擊展開 ▾</div>
+            </div>
+        </div>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="px-6 py-4 bg-[#8B0000] text-white">
+                <h3 class="text-lg font-bold">常見名詞速查</h3>
+            </div>
+            <div class="p-6">
+                <div class="flex flex-wrap gap-2" id="glossaryTags"></div>
+                <div id="glossaryDefinition" class="mt-6 p-4 bg-gray-50 border border-gray-200 rounded text-gray-700 hidden"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-gray-800 text-gray-300 py-12">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+            <h3 class="text-white text-lg font-bold mb-4 serif">東密明王殿</h3>
+            <p class="mb-4">明以弘法渡陰陽、修以禪宗解六界<br>定以蓮師揚佛法、靜以待之渡同門</p>
+            <p>地址：741台南市善化區中山路377號一樓店面20號</p>
+        </div>
+        <div class="flex flex-col items-start md:items-end">
+            <a href="https://www.facebook.com/groups/mingwang/" target="_blank" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition mb-4">
+                加入 FB 社團
+            </a>
+            <p class="text-sm text-gray-500">本應用程式內容源自明法師兄之金剛經註解文件。</p>
+        </div>
+    </div>
+</footer>
+
+<div id="about-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4" style="display:none">
+    <div class="bg-white rounded-lg max-w-lg w-full p-8 relative shadow-2xl">
+        <button onclick="document.getElementById('about-modal').style.display='none'" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl">✕</button>
+        <h3 class="text-2xl font-bold text-[#8B0000] mb-4">關於註解</h3>
+        <p class="text-gray-700 mb-4">本註解由不動明王殿【明法師兄】口述整理。特色在於將深奧的經文融於日常生活，強調「情緒管理」與「心性修行」。</p>
+        <p class="text-gray-700">師兄強調：修行不是脫離生活，而是將佛法落實於工作與家庭。</p>
+    </div>
+</div>
+
+<script>
+    const periodsData = {
+        labels: ['華嚴經 (3週)', '阿含經 (12年)', '方等經 (8年)', '般若經 (22年)', '法華涅槃 (8年)'],
+        data: [0.06, 12, 8, 22, 8],
+        colors: ['#E2E8F0', '#CBD5E1', '#94A3B8', '#DC2626', '#475569'],
+        details: [
+            { title: '第一時：華嚴經', desc: '成道後三七日說，度諸大菩薩弟子。' },
+            { title: '第二時：阿含經', desc: '十二年說，度聲聞、緣覺弟子。' },
+            { title: '第三時：方等經', desc: '八年說諸部大乘經，廣談四教。' },
+            { title: '第四時：般若經', desc: '二十二年說，包含《金剛經》。講述空性智慧。' },
+            { title: '第五時：法華涅槃', desc: '八年說，昭示一切眾生皆有佛性。' }
+        ]
+    };
+
+    const glossaryTerms = [
+        { term: '涅槃', def: '心達寂靜，不被塵事所影響，也就是不動心。分為有餘、無餘、無所住處涅槃。' },
+        { term: '四相', def: '我相（自我中心）、人相（比較計較）、眾生相（貪嗔癡集合）、壽者相（貪求功德壽命）。' },
+        { term: '六塵', def: '色、聲、香、味、觸、法。外界誘惑內心的媒介。' },
+        { term: '忍辱', def: '內心的包容稱為忍，外境遭受橫逆稱為辱。分生忍、法忍、無生法忍。' },
+        { term: '身空', def: '知身是幻，具父母習氣，終須敗壞，借假修真。' },
+        { term: '心空', def: '不被妄念牽著走，安住自己的心。' },
+        { term: '性空', def: '於環境中隨機渡化，自覺自知，不求功果。' },
+        { term: '法空', def: '不執著法，知法如船，渡河須捨。' },
+        { term: '阿羅漢', def: '心已超出六道，永離三界，遠離一切著相。' }
+    ];
+
+    const lessons = [
+        { id: 1, title: '法會因由', content: '佛祖吃完飯，收拾衣缽，洗腳打坐。', note: '修行在生活中，把本份做好，先顧腹肚才顧佛祖是錯的，佛祖不需你顧。一切人性化。' },
+        { id: 2, title: '善現啟請', content: '須菩提問：如何讓菩提心永恆不退轉？如何降伏妄心？', note: '所有的善知識啟請佛祖開示大法。' },
+        { id: 3, title: '大乘正宗', content: '降伏妄心要不著一切眾生相。雖渡無量眾生，實無眾生得渡者。', note: '遠離四相（我、人、眾生、壽者）。若有「我渡了誰」的念頭，就不是菩薩。' },
+        { id: 4, title: '妙行無住', content: '不住色佈施，不住聲香味觸法佈施。', note: '妙智慧的行善是不把此事放在心中。忘記佈施這回事，才是大福德。' },
+        { id: 5, title: '如理實見', content: '凡所有相，皆是虛妄。若見諸相非相，即見如來。', note: '不執著拜佛像的外相，學習佛的心（慈悲心），才見如來。' },
+        { id: 6, title: '正信希有', content: '法尚應捨，何況非法。', note: '正信很難。不執著功德，像打破玻璃罐讓空氣（功德）流向虛空。船到對岸要放下。' },
+        { id: 7, title: '無得無說', content: '如來有所說法耶？無有定法。', note: '無物得（破事障），無法得（破理障）。法只是工具，不可執著。' },
+        { id: 8, title: '依法出生', content: '所謂佛法者，即非佛法。', note: '金剛經旨在破障。一切佛皆從此經出，但不要執著「佛法」這個名詞。' },
+        { id: 9, title: '一相無相', content: '須陀洹至阿羅漢，皆不作是念。', note: '真正的佛子不會有「我已得道」的念頭。行善不求一相，即是一相無相。' },
+        { id: 10, title: '莊嚴淨土', content: '莊嚴佛土者，即非莊嚴，是名莊嚴。', note: '莊嚴佛土其實是莊嚴自己的心，改掉貪嗔癡慢疑。' },
+        { id: 11, title: '無為福勝', content: '受持四句偈的功德勝過恆河沙數七寶佈施。', note: '無為即無所求。了解身空、心空、性空、法空。' },
+        { id: 12, title: '尊重正教', content: '經典所在之處，即為有佛。', note: '尊重萬法源頭的般若法門。' },
+        { id: 13, title: '如法受持', content: '名為金剛般若波羅蜜。', note: '依法而修。犧牲生命不如講解此經渡人慧命。' },
+        { id: 14, title: '離相寂滅', content: '離一切諸相，即名諸佛。', note: '從忍辱修起：生忍、法忍、無生法忍。' },
+        { id: 15, title: '持經功德', content: '心性與佛一樣，廣渡眾生，稱為印契佛旨。', note: '文字般若（讀）、觀照般若（修）、實相般若（改習性）。' },
+        { id: 16, title: '能淨業障', content: '被人輕賤，是先世罪業，應墮惡道，以今世人輕賤故，先世罪業即為消滅。', note: '受持此經能消累世業障。業障來自貪嗔癡慢疑造的惡。' },
+        { id: 17, title: '究竟無我', content: '實無有法發阿耨多羅三藐三菩提心者。', note: '沒有人是佛陀渡的，都是自悟自渡。不可有「這是我渡的」這種心態。' },
+        { id: 18, title: '一體同觀', content: '過去心不可得，現在心不可得，未來心不可得。', note: '掃除三心，去除四相，找回清淨本體。' },
+        { id: 19, title: '法界通化', content: '若菩薩通達無我法者。', note: '把法界眾生當家人，不執功德，自然法界通化。' },
+        { id: 20, title: '離色離相', content: '若以色見我，以音聲求我，是人行邪道，不能見如來。', note: '不是外相崇拜，是內心修持。不要爭論宗教派別。' },
+        { id: 21, title: '非說所說', content: '若人言如來有所說法，即為謗佛。', note: '佛沒說法，只是解妄心的工具。放下法執。' },
+        { id: 22, title: '無法可得', content: '我於阿耨多羅三藐三菩提，乃至無有少法可得。', note: '凡是有得失的都是身外物。無上正等正覺人人俱足，只是被蒙蔽。' },
+        { id: 23, title: '淨心行善', content: '是法平等，無有高下。', note: '修一切善法，即得阿耨多羅三藐三菩提。但不要執著善。' },
+        { id: 24, title: '福智無比', content: '受持讀誦，為人演說。', note: '財佈施救急，法佈施救根救心。' },
+        { id: 25, title: '化無所化', content: '實無眾生如來渡者。', note: '佛說講經一輩子沒渡半個人，都是眾生自己改壞習慣的。' },
+        { id: 26, title: '法身非相', content: '若見諸相非相，即見如來。', note: '轉輪聖王也有三十二相。只見外表無法入佛髓。' },
+        { id: 27, title: '無斷無滅', content: '發阿耨多羅三藐三菩提心者，於法不說斷滅相。', note: '離相不是滅相。人還是要生活，心離塵而已。不是什麼都不做。' },
+        { id: 28, title: '不受不貪', content: '菩薩所作福德，不應貪著。', note: '貪求功德、果位、神通，都是貪，還是凡夫。' },
+        { id: 29, title: '威儀寂靜', content: '如來者，無所從來，亦無所去。', note: '威儀莊嚴是心性。心不被慾望牽走，順逆境不動心，就是威儀寂靜。' },
+        { id: 30, title: '一合理相', content: '一合相者，則是不可說。', note: '心性的一合理相。抓住念頭，不妄念紛飛。' },
+        { id: 31, title: '知見不生', content: '不生法相。', note: '知道這一切不要有任何見解產生，才是融入虛空法界。' },
+        { id: 32, title: '應化非真', content: '一切有為法，如夢幻泡影，如露亦如電，應作如是觀。', note: '法佈施救根救本。先以欲鉤牽，後令入佛智。' }
+    ];
+
+    let currentLessonIndex = 0;
+
+    function init() {
+        renderChart();
+        renderLessonList();
+        renderGlossary();
+        loadLesson(0);
+    }
+
+    function scrollToSection(id) {
+        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function toggleCard(element) {
+        const content = element.querySelector('.card-detail');
+        const hint = element.querySelector('.toggle-hint');
+        if (!content) return;
+        const isHidden = content.style.display === 'none' || content.style.display === '';
+        if (isHidden) {
+            content.style.display = 'block';
+            content.classList.add('fade-in');
+            if (hint) hint.innerText = "點擊收合 ▴";
+        } else {
+            content.style.display = 'none';
+            if (hint) hint.innerText = "點擊展開 ▾";
+        }
+    }
+
+    function renderChart() {
+        const ctx = document.getElementById('periodsChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: periodsData.labels,
+                datasets: [{
+                    data: periodsData.data,
+                    backgroundColor: periodsData.colors,
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) { return context.label; }
+                        }
+                    }
+                },
+                onClick: (e, activeElements) => {
+                    if (activeElements.length > 0) {
+                        updateContextDetails(activeElements[0].index);
+                    }
+                }
+            }
+        });
+    }
+
+    function updateContextDetails(index) {
+        const detail = periodsData.details[index];
+        document.getElementById('p-title').innerText = detail.title;
+        document.getElementById('p-desc').innerText = detail.desc;
+    }
+
+    function renderLessonList(filterText = '') {
+        const listContainer = document.getElementById('lessonList');
+        listContainer.innerHTML = '';
+        lessons.forEach((lesson, index) => {
+            if (filterText && !lesson.title.includes(filterText) && !lesson.content.includes(filterText) && !lesson.note.includes(filterText)) return;
+            const btn = document.createElement('button');
+            btn.className = `w-full text-left p-3 text-sm border-b border-gray-100 transition duration-200 hover:bg-gray-50 flex items-center justify-between ${index === currentLessonIndex ? 'active-lesson text-gray-900 font-bold' : 'text-gray-600'}`;
+            btn.innerHTML = `<span>${lesson.id}. ${lesson.title}</span>`;
+            btn.onclick = () => loadLesson(index);
+            listContainer.appendChild(btn);
+        });
+    }
+
+    function loadLesson(index) {
+        if (index < 0 || index >= lessons.length) return;
+        currentLessonIndex = index;
+        const lesson = lessons[index];
+        renderLessonList(document.getElementById('lessonSearch').value);
+        document.getElementById('currentLessonTitle').innerText = `第${lesson.id}課：${lesson.title}`;
+        const contentHTML = `
+            <div class="mb-8">
+                <h4 class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-2">經文 / 佛祖對話</h4>
+                <div class="text-lg leading-relaxed text-gray-800 bg-gray-50 p-6 rounded-lg border-l-4 border-gray-300 italic" style="font-family:'Noto Serif TC',serif">
+                    「${lesson.content}」
+                </div>
+            </div>
+            <div class="mb-4">
+                <h4 class="text-sm font-bold text-[#8B0000] uppercase tracking-wide mb-2">明法師兄註解</h4>
+                <div class="text-base leading-7 text-gray-700">
+                    <p>${lesson.note}</p>
+                </div>
+            </div>
+        `;
+        const display = document.getElementById('lessonContentDisplay');
+        display.innerHTML = contentHTML;
+        display.scrollTop = 0;
+        display.classList.remove('fade-in');
+        void display.offsetWidth;
+        display.classList.add('fade-in');
+    }
+
+    function changeLesson(direction) {
+        loadLesson(currentLessonIndex + direction);
+    }
+
+    document.getElementById('lessonSearch').addEventListener('input', (e) => {
+        renderLessonList(e.target.value);
+    });
+
+    function renderGlossary() {
+        const container = document.getElementById('glossaryTags');
+        glossaryTerms.forEach((item) => {
+            const tag = document.createElement('button');
+            tag.className = "bg-gray-100 hover:bg-amber-100 text-gray-700 hover:text-[#8B0000] px-3 py-1 rounded-full text-sm transition";
+            tag.innerText = item.term;
+            tag.onclick = () => showDefinition(item);
+            container.appendChild(tag);
+        });
+    }
+
+    function showDefinition(item) {
+        const defBox = document.getElementById('glossaryDefinition');
+        defBox.innerHTML = `<strong>${item.term}：</strong> ${item.def}`;
+        defBox.style.display = 'block';
+        defBox.classList.add('fade-in');
+    }
+
+    document.getElementById('about-modal').addEventListener('click', function(e) {
+        if (e.target === this) this.style.display = 'none';
+    });
+
+    document.querySelector('button[onclick*="about-modal"]').addEventListener('click', function() {
+        document.getElementById('about-modal').style.display = 'flex';
+    });
+
+    window.onload = init;
+</script>
+</body>
+</html>
