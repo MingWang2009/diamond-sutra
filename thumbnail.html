@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1200">
+<title>縮圖</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;700;900&family=Noto+Sans+TC:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background: #1a0a00;
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+
+  .card {
+    width: 1200px;
+    height: 630px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+
+  /* Background texture layers */
+  .bg-base {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 50%, #3d0e00 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 10% 80%, #2a1800 0%, transparent 50%),
+      linear-gradient(135deg, #0d0500 0%, #1c0a02 40%, #2d1005 100%);
+  }
+
+  /* Ink wash texture */
+  .bg-wash {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255,255,255,0.012) 2px,
+        rgba(255,255,255,0.012) 4px
+      );
+    mix-blend-mode: overlay;
+  }
+
+  /* Decorative vertical red strip */
+  .strip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 8px;
+    height: 100%;
+    background: linear-gradient(to bottom, #c0392b, #8B0000, #5c0000);
+  }
+
+  /* Large faded Chinese character background */
+  .bg-char {
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Noto Serif TC', serif;
+    font-size: 520px;
+    font-weight: 900;
+    color: rgba(139, 0, 0, 0.07);
+    line-height: 1;
+    letter-spacing: -20px;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  /* Lotus decorative dots */
+  .lotus-ring {
+    position: absolute;
+    right: 340px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    border: 1px solid rgba(214, 158, 46, 0.15);
+    box-shadow:
+      0 0 0 20px rgba(214, 158, 46, 0.04),
+      0 0 0 40px rgba(214, 158, 46, 0.03),
+      0 0 80px rgba(214, 158, 46, 0.08) inset;
+  }
+  .lotus-ring::before {
+    content: '';
+    position: absolute;
+    inset: 20px;
+    border-radius: 50%;
+    border: 1px solid rgba(214, 158, 46, 0.2);
+  }
+  .lotus-ring::after {
+    content: '卍';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 52px;
+    color: rgba(214, 158, 46, 0.25);
+    font-family: 'Noto Serif TC', serif;
+  }
+
+  /* Main content left */
+  .content {
+    position: relative;
+    z-index: 10;
+    padding: 60px 0 60px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 680px;
+  }
+
+  .top-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #d69e2e;
+  }
+  .label-text {
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: #d69e2e;
+    font-weight: 300;
+    text-transform: uppercase;
+  }
+
+  .main-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 96px;
+    font-weight: 900;
+    color: #fdf6e3;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    text-shadow: 0 4px 40px rgba(0,0,0,0.5);
+  }
+  .main-title span {
+    color: #e53e3e;
+  }
+
+  .subtitle {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: rgba(253, 246, 227, 0.6);
+    line-height: 1.7;
+    letter-spacing: 1px;
+    margin-top: -12px;
+  }
+
+  /* Divider line */
+  .divider {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(to right, #d69e2e, transparent);
+    margin: 4px 0;
+  }
+
+  .bottom-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .temple-name {
+    font-size: 15px;
+    color: rgba(214, 158, 46, 0.9);
+    letter-spacing: 3px;
+    font-weight: 400;
+  }
+
+  .url {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 1px;
+    font-family: 'Noto Sans TC', monospace;
+  }
+
+  /* Right panel stats */
+  .stats-panel {
+    position: relative;
+    z-index: 10;
+    width: 360px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding-right: 60px;
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 24px 36px;
+    border: 1px solid rgba(214, 158, 46, 0.2);
+    border-radius: 4px;
+    background: rgba(139, 0, 0, 0.12);
+    backdrop-filter: blur(4px);
+    width: 200px;
+    position: relative;
+  }
+  .stat-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(214, 158, 46, 0.5), transparent);
+  }
+
+  .stat-num {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: #f6c547;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 3px;
+    margin-top: 6px;
+  }
+
+  /* Corner ornament */
+  .corner-tl, .corner-br {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    z-index: 20;
+  }
+  .corner-tl {
+    top: 24px; left: 24px;
+    border-top: 2px solid rgba(214,158,46,0.4);
+    border-left: 2px solid rgba(214,158,46,0.4);
+  }
+  .corner-br {
+    bottom: 24px; right: 24px;
+    border-bottom: 2px solid rgba(214,158,46,0.4);
+    border-right: 2px solid rgba(214,158,46,0.4);
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="bg-base"></div>
+  <div class="bg-wash"></div>
+  <div class="strip"></div>
+  <div class="bg-char">剛</div>
+  <div class="lotus-ring"></div>
+  <div class="corner-tl"></div>
+  <div class="corner-br"></div>
+
+  <div class="content">
+    <div class="top-label">
+      <div class="dot"></div>
+      <span class="label-text">東密明王殿 • 明法師兄淺釋</span>
+    </div>
+
+    <div>
+      <div class="main-title"><span>金剛</span>經<br>註解</div>
+      <div class="divider"></div>
+      <div class="subtitle">
+        將金剛經融於生活<br>
+        心性修行 • 情緒管理 • 自我覺醒
+      </div>
+    </div>
+
+    <div class="bottom-info">
+      <div class="temple-name">東密明王殿</div>
+      <div class="url">mingwang2009.github.io/diamond-sutra</div>
+    </div>
+  </div>
+
+  <div class="stats-panel">
+    <div class="stat-item">
+      <div class="stat-num">32</div>
+      <div class="stat-label">課　程</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">22年</div>
+      <div class="stat-label">般若說法</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">免費</div>
+      <div class="stat-label">線上閱讀</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
