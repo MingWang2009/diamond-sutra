@@ -143,25 +143,45 @@ to { opacity: 1; transform: translateY(0); }
             <h2 class="text-3xl font-bold text-gray-900 mb-2 serif">金剛經三十二課淺釋</h2>
             <p class="text-gray-600">選擇章節以閱讀經文與註解。</p>
         </div>
-        <div class="flex flex-col lg:flex-row gap-6 h-[800px] lg:h-[600px]">
-            <div class="w-full lg:w-1/4 flex flex-col bg-white rounded-lg shadow-md border border-gray-100 overflow-hidden">
+        <!-- 手機版：下拉選單 + 上下課按鈕 -->
+        <div class="lg:hidden mb-4 space-y-3">
+            <div class="flex gap-2">
+                <select id="mobileLessonSelect" onchange="loadLesson(this.value - 1)" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm bg-white text-gray-700 serif"></select>
+                <button onclick="changeLesson(-1)" class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-amber-50 text-gray-600 font-medium">&#8592;</button>
+                <button onclick="changeLesson(1)" class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-amber-50 text-gray-600 font-medium">&#8594;</button>
+            </div>
+            <input type="text" id="lessonSearchMobile" placeholder="搜尋課名或內容..." class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
+        </div>
+
+        <!-- 桌機版：左右分欄 -->
+        <div class="hidden lg:flex gap-6 h-[600px]">
+            <div class="w-1/4 flex flex-col bg-white rounded-lg shadow-md border border-gray-100 overflow-hidden">
                 <div class="p-4 bg-gray-50 border-b border-gray-200">
                     <input type="text" id="lessonSearch" placeholder="搜尋課名或內容..." class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
                 </div>
                 <div id="lessonList" class="flex-1 overflow-y-auto custom-scroll p-2 space-y-1"></div>
             </div>
-            <div class="w-full lg:w-3/4 bg-white rounded-lg shadow-md border border-gray-100 flex flex-col relative">
-                <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-white sticky top-0 z-10 rounded-t-lg">
+            <div class="w-3/4 bg-white rounded-lg shadow-md border border-gray-100 flex flex-col">
+                <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-white rounded-t-lg">
                     <h3 id="currentLessonTitle" class="text-2xl font-bold text-[#8B0000] serif">第一課：法會因由</h3>
                     <div class="flex space-x-2">
-                        <button onclick="changeLesson(-1)" class="p-2 rounded-full hover:bg-gray-100 text-gray-500" title="上一課">&#8592;</button>
-                        <button onclick="changeLesson(1)" class="p-2 rounded-full hover:bg-gray-100 text-gray-500" title="下一課">&#8594;</button>
+                        <button onclick="changeLesson(-1)" class="p-2 rounded-full hover:bg-gray-100 text-gray-500">&#8592;</button>
+                        <button onclick="changeLesson(1)" class="p-2 rounded-full hover:bg-gray-100 text-gray-500">&#8594;</button>
                     </div>
                 </div>
-                <div id="lessonContentDisplay" class="flex-1 overflow-y-auto p-6 md:p-8 custom-scroll fade-in"></div>
-                <div class="p-4 bg-gray-50 border-t border-gray-100 text-center text-sm text-gray-500">
-                    提示：點擊「核心概念」可查看名詞解釋
+                <div id="lessonContentDisplay" class="flex-1 overflow-y-auto p-8 custom-scroll fade-in"></div>
+                <div class="p-4 bg-gray-50 border-t border-gray-100 text-center text-sm text-gray-500">提示：點擊「核心概念」可查看名詞解釋</div>
+            </div>
+        </div>
+
+        <!-- 手機版：課文內容區（無固定高度，自然展開） -->
+        <div class="lg:hidden">
+            <div class="bg-white rounded-lg shadow-md border border-gray-100 overflow-hidden">
+                <div class="px-5 py-4 border-b border-gray-100 bg-[#8B0000]">
+                    <h3 id="currentLessonTitleMobile" class="text-lg font-bold text-white serif">第一課：法會因由</h3>
                 </div>
+                <div id="lessonContentDisplayMobile" class="p-5"></div>
+                <div class="px-5 py-3 bg-gray-50 border-t text-center text-xs text-gray-400">🙏 點擊下方「核心概念」查看名詞解釋</div>
             </div>
         </div>
     </div>
@@ -322,8 +342,21 @@ to { opacity: 1; transform: translateY(0); }
     function init() {
         renderChart();
         renderLessonList();
+        renderMobileSelect();
         renderGlossary();
         loadLesson(0);
+
+        // Mobile search
+        const mobileSearch = document.getElementById('lessonSearchMobile');
+        if (mobileSearch) {
+            mobileSearch.addEventListener('input', (e) => {
+                const q = e.target.value;
+                const found = lessons.findIndex(l =>
+                    l.title.includes(q) || l.content.includes(q) || l.note.includes(q)
+                );
+                if (found >= 0) loadLesson(found);
+            });
+        }
     }
 
     function scrollToSection(id) {
@@ -397,32 +430,75 @@ to { opacity: 1; transform: translateY(0); }
         });
     }
 
+    function renderMobileSelect() {
+        const select = document.getElementById('mobileLessonSelect');
+        if (!select) return;
+        select.innerHTML = '';
+        lessons.forEach((lesson, index) => {
+            const opt = document.createElement('option');
+            opt.value = lesson.id;
+            opt.textContent = `第${lesson.id}課：${lesson.title}`;
+            if (index === currentLessonIndex) opt.selected = true;
+            select.appendChild(opt);
+        });
+    }
+
     function loadLesson(index) {
         if (index < 0 || index >= lessons.length) return;
         currentLessonIndex = index;
         const lesson = lessons[index];
-        renderLessonList(document.getElementById('lessonSearch').value);
-        document.getElementById('currentLessonTitle').innerText = `第${lesson.id}課：${lesson.title}`;
+
+        // Update desktop list
+        renderLessonList(document.getElementById('lessonSearch') ? document.getElementById('lessonSearch').value : '');
+
+        // Update mobile select
+        const mobileSelect = document.getElementById('mobileLessonSelect');
+        if (mobileSelect) mobileSelect.value = lesson.id;
+
+        const titleText = `第${lesson.id}課：${lesson.title}`;
+        const desktopTitle = document.getElementById('currentLessonTitle');
+        const mobileTitle = document.getElementById('currentLessonTitleMobile');
+        if (desktopTitle) desktopTitle.innerText = titleText;
+        if (mobileTitle) mobileTitle.innerText = titleText;
+
         const contentHTML = `
-            <div class="mb-8">
-                <h4 class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-2">經文 / 佛祖對話</h4>
-                <div class="text-base leading-8 text-gray-800 bg-gray-50 p-6 rounded-lg border-l-4 border-gray-300" style="font-family:'Noto Serif TC',serif">
+            <div class="mb-6">
+                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">經文 / 佛祖對話</h4>
+                <div class="text-base leading-8 text-gray-800 bg-gray-50 p-5 rounded-lg border-l-4 border-gray-300" style="font-family:'Noto Serif TC',serif">
                     ${lesson.content}
                 </div>
             </div>
             <div class="mb-4">
-                <h4 class="text-sm font-bold text-[#8B0000] uppercase tracking-wide mb-2">明法師兄註解</h4>
-                <div class="text-base leading-7 text-gray-700 bg-amber-50 p-5 rounded-lg">
+                <h4 class="text-xs font-bold text-[#8B0000] uppercase tracking-widest mb-3">明法師兄註解</h4>
+                <div class="text-base leading-7 text-gray-700 bg-amber-50 p-5 rounded-lg border-l-4 border-amber-300">
                     ${lesson.note}
                 </div>
             </div>
         `;
-        const display = document.getElementById('lessonContentDisplay');
-        display.innerHTML = contentHTML;
-        display.scrollTop = 0;
-        display.classList.remove('fade-in');
-        void display.offsetWidth;
-        display.classList.add('fade-in');
+
+        // Render desktop
+        const desktopDisplay = document.getElementById('lessonContentDisplay');
+        if (desktopDisplay) {
+            desktopDisplay.innerHTML = contentHTML;
+            desktopDisplay.scrollTop = 0;
+            desktopDisplay.classList.remove('fade-in');
+            void desktopDisplay.offsetWidth;
+            desktopDisplay.classList.add('fade-in');
+        }
+
+        // Render mobile
+        const mobileDisplay = document.getElementById('lessonContentDisplayMobile');
+        if (mobileDisplay) {
+            mobileDisplay.innerHTML = contentHTML;
+            mobileDisplay.classList.remove('fade-in');
+            void mobileDisplay.offsetWidth;
+            mobileDisplay.classList.add('fade-in');
+            // Scroll mobile to content
+            const studySection = document.getElementById('study');
+            if (studySection && window.innerWidth < 1024) {
+                setTimeout(() => studySection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+            }
+        }
     }
 
     function changeLesson(direction) {
