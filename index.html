@@ -443,6 +443,8 @@ to { opacity: 1; transform: translateY(0); }
         });
     }
 
+    let isInit = true;
+
     function loadLesson(index) {
         if (index < 0 || index >= lessons.length) return;
         currentLessonIndex = index;
@@ -493,12 +495,15 @@ to { opacity: 1; transform: translateY(0); }
             mobileDisplay.classList.remove('fade-in');
             void mobileDisplay.offsetWidth;
             mobileDisplay.classList.add('fade-in');
-            // Scroll mobile to content
-            const studySection = document.getElementById('study');
-            if (studySection && window.innerWidth < 1024) {
-                setTimeout(() => studySection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+            // 只有使用者主動切換課時才捲動，初始載入不捲
+            if (!isInit) {
+                const studySection = document.getElementById('study');
+                if (studySection && window.innerWidth < 1024) {
+                    setTimeout(() => studySection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+                }
             }
         }
+        isInit = false;
     }
 
     function changeLesson(direction) {
