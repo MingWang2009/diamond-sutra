@@ -216,12 +216,18 @@
                 <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition cursor-pointer group" onclick="toggleCard(this)">
                     <div class="flex items-center justify-between mb-4">
                         <h4 class="text-xl font-bold text-[#8B0000]">離四相</h4>
-                        <span class="text-2xl">🌫️</span>
+                        <!-- 純 CSS 繪製：四相圖示 (旋轉方塊，其中一個空心代表「離」) -->
+                        <div class="w-6 h-6 grid grid-cols-2 gap-1 transform rotate-45">
+                            <div class="bg-amber-600 rounded-sm opacity-80"></div>
+                            <div class="bg-amber-600 rounded-sm opacity-50"></div>
+                            <div class="bg-amber-600 rounded-sm opacity-30"></div>
+                            <div class="bg-transparent border-[1.5px] border-amber-600 rounded-sm"></div>
+                        </div>
                     </div>
                     <p class="text-gray-600 line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
                         我相、人相、眾生相、壽者相。金剛經的核心在於破除這四種執著。
                     </p>
-                    <div class="hidden mt-4 pt-4 border-t border-gray-100 text-sm text-gray-700 fade-in">
+                    <div class="toggle-content hidden mt-4 pt-4 border-t border-gray-100 text-sm text-gray-700 fade-in">
                         <ul class="list-disc pl-5 space-y-2">
                             <li><strong>我相：</strong> 有我的看法，我的自私。</li>
                             <li><strong>人相：</strong> 愛計較，愛比較。</li>
@@ -229,19 +235,24 @@
                             <li><strong>壽者相：</strong> 有所求，或覺得「我做了多少功德」、「我渡拔多少眾生」。</li>
                         </ul>
                     </div>
-                    <div class="mt-4 text-center text-amber-600 text-sm font-medium group-hover:hidden">點擊展開</div>
+                    <div class="toggle-hint mt-4 text-center text-amber-600 text-sm font-medium">點擊展開</div>
                 </div>
 
                 <!-- Three Minds -->
                 <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition cursor-pointer group" onclick="toggleCard(this)">
                     <div class="flex items-center justify-between mb-4">
                         <h4 class="text-xl font-bold text-[#8B0000]">掃三心</h4>
-                        <span class="text-2xl">🧹</span>
+                        <!-- 純 CSS 繪製：三心圖示 (三個漸變圓點，象徵過去/現在/未來皆空) -->
+                        <div class="flex space-x-1.5 items-center h-6">
+                            <div class="w-1.5 h-1.5 rounded-full bg-amber-600 opacity-20"></div>
+                            <div class="w-2 h-2 rounded-full bg-amber-600 opacity-50"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-amber-600 opacity-90"></div>
+                        </div>
                     </div>
                     <p class="text-gray-600 line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
                         過去心不可得，現在心不可得，未來心不可得。
                     </p>
-                    <div class="hidden mt-4 pt-4 border-t border-gray-100 text-sm text-gray-700 fade-in">
+                    <div class="toggle-content hidden mt-4 pt-4 border-t border-gray-100 text-sm text-gray-700 fade-in">
                         <ul class="list-disc pl-5 space-y-2">
                             <li><strong>過去心要忘記：</strong> 過去的煩惱與榮耀應忘記。</li>
                             <li><strong>現在心要放下：</strong> 當下的執著應放下。</li>
@@ -249,23 +260,27 @@
                         </ul>
                         <p class="mt-3 text-amber-800 font-medium">安住當下，清淨本心。</p>
                     </div>
-                    <div class="mt-4 text-center text-amber-600 text-sm font-medium group-hover:hidden">點擊展開</div>
+                    <div class="toggle-hint mt-4 text-center text-amber-600 text-sm font-medium">點擊展開</div>
                 </div>
 
                 <!-- True Merit -->
                 <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition cursor-pointer group" onclick="toggleCard(this)">
                     <div class="flex items-center justify-between mb-4">
                         <h4 class="text-xl font-bold text-[#8B0000]">無為福勝</h4>
-                        <span class="text-2xl">✨</span>
+                        <!-- 純 CSS 繪製：無為福勝圖示 (散發光芒的核心) -->
+                        <div class="relative w-6 h-6 flex items-center justify-center">
+                            <div class="absolute inset-0 bg-amber-400 rounded-full animate-ping opacity-20"></div>
+                            <div class="w-3.5 h-3.5 bg-amber-500 rounded-full ring-4 ring-amber-100"></div>
+                        </div>
                     </div>
                     <p class="text-gray-600 line-clamp-2 group-hover:line-clamp-none transition-all duration-300">
                         為何不住相佈施的福德比恆河沙數七寶佈施還大？
                     </p>
-                    <div class="hidden mt-4 pt-4 border-t border-gray-100 text-sm text-gray-700 fade-in">
+                    <div class="toggle-content hidden mt-4 pt-4 border-t border-gray-100 text-sm text-gray-700 fade-in">
                         <p class="mb-2"><strong>有相佈施：</strong> 如同將物品放入有限的玻璃罐中，福德有限。</p>
                         <p><strong>無相佈施：</strong> 如同打開玻璃罐蓋，讓功德佈滿虛空十方法界，與三世諸佛菩薩的功德融合於法界中，這才稱無量功德。</p>
                     </div>
-                    <div class="mt-4 text-center text-amber-600 text-sm font-medium group-hover:hidden">點擊展開</div>
+                    <div class="toggle-hint mt-4 text-center text-amber-600 text-sm font-medium">點擊展開</div>
                 </div>
             </div>
 
@@ -760,8 +775,8 @@
         }
 
         function toggleCard(element) {
-            const content = element.querySelector('.hidden');
-            const hint = element.querySelector('.text-amber-600');
+            const content = element.querySelector('.toggle-content');
+            const hint = element.querySelector('.toggle-hint');
             if (content.classList.contains('hidden')) {
                 content.classList.remove('hidden');
                 hint.innerText = "點擊收合";
