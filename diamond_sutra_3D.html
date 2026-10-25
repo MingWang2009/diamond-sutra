@@ -6,71 +6,174 @@
 <title>金剛經註解｜3D 導覽地圖</title>
 <meta property="og:type" content="website">
 <meta property="og:locale" content="zh_TW">
-<meta property="og:title"
-      content="金剛經註解｜3D 互動導覽地圖">
-<meta property="og:description"
-      content="東密明王殿・明法師兄淺釋。32課經文註解、四大導覽區塊、五時說法與法師帶路，走入般若智慧的立體世界。">
-<meta property="og:url"
-      content="https://mingwang2009.github.io/diamond-sutra/diamond_sutra_3D.html">
-<meta property="og:image"
-      content="https://mingwang2009.github.io/diamond-sutra/diamond_sutra_3D_og_1200x630.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:type" content="image/png">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:title" content="金剛經註解｜3D 互動導覽地圖">
+<meta property="og:description" content="東密明王殿・明法師兄淺釋。32課經文註解、四大導覽區塊、五時說法與法師帶路，走入般若智慧的立體世界。">
 <style>
-:root{--bg:#fdfbf7;--fg:#2d2d2d;--mut:#6b6558;--card:#fff;--line:#e8dfcc;--red:#8B0000;--gold:#b45309;--soft:#fffbeb;box-sizing:border-box}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1a17;--fg:#ece6d8;--mut:#a89f8c;--card:#26231f;--line:#3a352d;--red:#e05a4f;--gold:#f0b24a;--soft:#2e2a22}}
-:root[data-theme="dark"]{--bg:#1c1a17;--fg:#ece6d8;--mut:#a89f8c;--card:#26231f;--line:#3a352d;--red:#e05a4f;--gold:#f0b24a;--soft:#2e2a22}
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--fg);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif}
-body{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:#8B0000;z-index:30}
-#app{position:relative;height:100%}
-#cv{position:absolute;inset:0}
-canvas{display:block;width:100%;height:100%;touch-action:none}
-header{position:absolute;top:0;left:0;right:0;z-index:5;background:#8B0000;color:#fffbeb;padding:8px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;box-shadow:0 2px 8px #0004}
-header h1{font:700 18px "Noto Serif TC","PingFang TC",serif;margin:0;letter-spacing:.1em}
-header small{opacity:.8;font-size:12px}
-nav{display:flex;gap:6px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none}
-nav::-webkit-scrollbar{display:none}
-button,select{font:inherit;cursor:pointer}
-.chip{flex:none;border:1px solid #fffbeb66;background:transparent;color:#fffbeb;border-radius:999px;padding:5px 12px;font-size:13px}
-.chip:hover,.chip.on{background:#fffbeb;color:#8B0000}
-select.chip{background:#8B0000;max-width:150px}
-#panel{position:absolute;z-index:6;background:var(--card);border:1px solid var(--line);box-shadow:0 8px 30px #0005;overflow:auto;transition:transform .35s ease;top:64px;right:10px;bottom:10px;width:min(420px,40vw);border-radius:14px;padding:18px 18px 22px}
-#panel.hide{transform:translateX(120%)}
-#panel h2{font:700 21px "Noto Serif TC","PingFang TC",serif;color:var(--red);margin:0 28px 4px 0}
-#panel .tag{font-size:12px;color:var(--mut);margin-bottom:10px}
-#panel h3{font-size:13px;color:var(--gold);margin:16px 0 6px;letter-spacing:.1em}
-#panel .txt{white-space:pre-line;line-height:1.85;font-size:15px}
-#panel .note{background:var(--soft);border-left:4px solid var(--gold);padding:10px 12px;border-radius:6px}
-#panel .extra{margin-top:12px;font-size:14px;line-height:1.7}
-#panel .extra div{background:var(--soft);border:1px solid var(--line);padding:10px;border-radius:6px}
-#close{position:absolute;top:10px;right:10px;border:0;background:var(--soft);color:var(--fg);width:32px;height:32px;border-radius:50%;font-size:16px}
-.pn{display:flex;gap:8px;margin-top:18px}
-.pn button{flex:1;border:1px solid var(--red);background:var(--card);color:var(--red);border-radius:8px;padding:9px;font-size:14px}
-.pn button:disabled{opacity:.35}
-.pn button.pri{background:var(--red);color:#fff}
-#toast{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:4;background:#000a;color:#fff;padding:7px 14px;border-radius:999px;font-size:13px;pointer-events:none;opacity:0;transition:opacity .3s;max-width:90%;text-align:center}
-#toast.on{opacity:1}
-#hint{position:absolute;left:12px;bottom:16px;z-index:3;font-size:12px;color:var(--mut);background:var(--card);padding:5px 10px;border-radius:8px;border:1px solid var(--line);max-width:260px}
-#load{position:absolute;inset:0;display:grid;place-items:center;background:var(--bg);z-index:20;font:600 20px "Noto Serif TC",serif;color:var(--red);transition:opacity .5s}
-@media (max-width:760px){
- header small{display:none}
- #panel{top:auto;left:8px;right:8px;bottom:8px;width:auto;max-height:54vh;padding:14px 14px 18px}
- #panel.hide{transform:translateY(120%)}
- #hint{display:none}
- #toast{bottom:auto;top:108px}
+/* --- UI/UX 商業精緻化升級 --- */
+:root {
+  --bg: #fdfbf7; 
+  --fg: #2c2925; 
+  --mut: #827b6e; 
+  --card: rgba(255, 255, 255, 0.85); 
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --line: rgba(232, 223, 204, 0.8); 
+  --red: #8B0000; 
+  --red-soft: rgba(139, 0, 0, 0.06); 
+  --gold: #b45309; 
+  --gold-soft: rgba(180, 83, 9, 0.08); 
+  --soft: rgba(253, 250, 237, 0.7);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 12px 40px -10px rgba(0, 0, 0, 0.12), 0 0 20px rgba(0,0,0,0.03);
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1c1a17; 
+    --fg: #ece6d8; 
+    --mut: #a89f8c; 
+    --card: rgba(38, 35, 31, 0.75); 
+    --glass-border: rgba(255, 255, 255, 0.06);
+    --line: rgba(58, 53, 45, 0.8); 
+    --red: #e05a4f; 
+    --red-soft: rgba(224, 90, 79, 0.12);
+    --gold: #f0b24a; 
+    --gold-soft: rgba(240, 178, 74, 0.12);
+    --soft: rgba(35, 32, 28, 0.7);
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 12px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0,0,0,0.2);
+  }
+}
+
+* { box-sizing: border-box; }
+html, body { 
+  height: 100%; margin: 0; overflow: hidden; 
+  background: var(--bg); color: var(--fg); 
+  font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+}
+body { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: #8B0000; z-index: 30; }
+
+#app { position: relative; height: 100%; }
+#cv { position: absolute; inset: 0; }
+canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+
+header {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 5;
+  background: rgba(120, 10, 10, 0.85); 
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fffbeb; padding: 10px 16px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  box-shadow: var(--shadow-sm);
+}
+header h1 { font: 700 19px "Noto Serif TC", "PingFang TC", serif; margin: 0; letter-spacing: 0.08em; }
+header small { opacity: 0.85; font-size: 12.5px; font-weight: 300; letter-spacing: 0.05em; margin-left: 4px; }
+nav { display: flex; gap: 8px; overflow-x: auto; flex: 1; min-width: 0; scrollbar-width: none; padding: 2px 0; }
+nav::-webkit-scrollbar { display: none; }
+
+button, select, input { font: inherit; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.chip {
+  flex: none; border: none; 
+  background: rgba(255, 255, 255, 0.12); color: rgba(255, 251, 235, 0.9);
+  border-radius: 999px; padding: 6px 14px; font-size: 13.5px; outline: none;
+}
+.chip:hover, .chip.on {
+  background: rgba(255, 255, 255, 0.95); color: #8B0000;
+  transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+select.chip { background: rgba(0,0,0,0.2); max-width: 140px; }
+input.chip { background: rgba(0,0,0,0.25); color: #fffbeb; max-width: 170px; cursor: text; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
+input.chip::placeholder { color: rgba(255,251,235,0.6); }
+input.chip:focus { background: rgba(255, 255, 255, 0.95); color: #8B0000; transform: translateY(-1px); }
+
+#panel {
+  position: absolute; z-index: 6; 
+  background: var(--card); 
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); 
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-lg); 
+  overflow-y: auto; overflow-x: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+  top: 72px; right: 16px; bottom: 16px; width: min(440px, 90vw); 
+  border-radius: 20px; 
+  padding: 36px 32px 42px; 
+}
+#panel::-webkit-scrollbar { width: 6px; }
+#panel::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
+#panel.hide { transform: translateX(110%); }
+
+#panel h2 { font: 700 24px "Noto Serif TC", "PingFang TC", serif; color: var(--red); margin: 0 32px 10px 0; line-height: 1.3; }
+#panel .tag { 
+  display: inline-block; font-size: 12.5px; color: var(--mut); margin-bottom: 26px; 
+  padding: 4px 10px; background: var(--red-soft); border-radius: 6px; letter-spacing: 0.03em;
+}
+#panel h3 { font-size: 14.5px; color: var(--gold); margin: 32px 0 12px; letter-spacing: 0.1em; font-weight: 600; opacity: 0.9; }
+#panel .txt { white-space: pre-line; line-height: 1.9; font-size: 15.5px; letter-spacing: 0.02em; color: var(--fg); }
+#panel .note { background: var(--soft); border-left: 3px solid var(--gold); padding: 18px 20px; border-radius: 0 12px 12px 0; margin-top: 16px; }
+#panel .extra { margin-top: 28px; font-size: 14.5px; line-height: 1.8; }
+#panel .extra div { background: var(--soft); border: 1px solid var(--line); padding: 16px 20px; border-radius: 12px; }
+
+#close {
+  position: absolute; top: 16px; right: 16px; border: 0; 
+  background: var(--soft); color: var(--mut); 
+  width: 36px; height: 36px; border-radius: 50%; font-size: 16px;
+  display: grid; place-items: center; transition: all 0.3s ease;
+}
+#close:hover { background: var(--line); color: var(--fg); transform: rotate(90deg); }
+
+.pn { display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
+.pn button {
+  flex: 1; border: none; 
+  background: var(--red-soft); color: var(--red); font-weight: 500;
+  border-radius: 12px; padding: 12px; font-size: 14.5px; min-width: 110px;
+}
+.pn button:hover:not(:disabled) { background: var(--red); color: #fff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(139,0,0,0.2); }
+.pn button:disabled { opacity: 0.4; cursor: not-allowed; }
+.pn button.pri { background: var(--red); color: #fff; box-shadow: 0 4px 12px rgba(139,0,0,0.25); }
+.pn button.pri:hover:not(:disabled) { filter: brightness(1.15); box-shadow: 0 6px 16px rgba(139,0,0,0.35); }
+.pn button.audio-btn { background: var(--gold-soft); color: var(--gold); flex-basis: 100%; box-shadow: none; }
+.pn button.audio-btn:hover { background: var(--gold); color: #fff; box-shadow: 0 4px 12px rgba(180,83,9,0.25); }
+
+#toast {
+  position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 4;
+  background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  color: #fff; padding: 10px 20px; border-radius: 999px; font-size: 14px; letter-spacing: 0.05em;
+  pointer-events: none; opacity: 0; transition: opacity 0.3s; max-width: 90%; text-align: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+#toast.on { opacity: 1; }
+#hint {
+  position: absolute; left: 16px; bottom: 20px; z-index: 3; font-size: 12px; color: var(--mut); 
+  background: var(--card); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  padding: 8px 14px; border-radius: 12px; border: 1px solid var(--line); max-width: 280px;
+  box-shadow: var(--shadow-sm); letter-spacing: 0.05em;
+}
+#load {
+  position: absolute; inset: 0; display: grid; place-items: center; 
+  background: var(--bg); z-index: 20; font: 600 22px "Noto Serif TC", serif; color: var(--red); 
+  transition: opacity 0.6s; letter-spacing: 0.1em;
+}
+
+@media (max-width: 760px) {
+  header small { display: none; }
+  input.chip { max-width: 140px; }
+  #panel {
+    top: auto; left: 10px; right: 10px; bottom: 10px; width: auto; 
+    max-height: 60vh; padding: 26px 24px 30px; border-radius: 24px;
+  }
+  #panel.hide { transform: translateY(110%); }
+  #hint { display: none; }
+  #toast { bottom: auto; top: 120px; }
 }
 </style>
 </head>
 <body>
 <div id="app">
  <header>
-  <h1>金剛經註解</h1><small>東密明王殿 • 明法師兄淺釋</small>
+  <h1>金剛經註解</h1><small>東密明王殿 • 明法師兄</small>
   <nav id="nav"></nav>
   <select class="chip" id="pick" aria-label="選擇課程"></select>
+  <input type="text" id="search" class="chip" placeholder="🔍 搜尋經文/註解..." aria-label="搜尋">
  </header>
  <div id="cv"></div>
  <aside id="panel" class="hide" aria-live="polite"><button id="close" aria-label="關閉">✕</button><div id="pc"></div></aside>
@@ -80,87 +183,87 @@ select.chip{background:#8B0000;max-width:150px}
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
+// --- 資料集 (完整原始內容) ---
 const periodsData = {
-            labels: ['第一時:華嚴經', '第二時:阿含經', '第三時:方等經', '第四時:般若經(金剛經)', '第五時:法華涅槃經'],
-            data: [1, 12, 8, 22, 8], // 1 represents 3 weeks roughly for visual proportion
-            colors: ['#E2E8F0', '#CBD5E1', '#94A3B8', '#DC2626', '#475569'], // Grey scale with Red highlight for Prajna
-            details: [
-                { title: '第一時：華嚴經', desc: '成道後三七日說，度諸大菩薩弟子。', time: '3週' },
-                { title: '第二時：阿含經', desc: '十二年說，度聲聞、緣覺弟子。', time: '12年' },
-                { title: '第三時：方等經（諸部大乘經）', desc: '八年說諸部大乘經、三藏十二部廣談，藏、通、別、圓四教化度不同根基的弟子。', time: '8年' },
-                { title: '第四時：般若經', desc: '包含《金剛經》。講述「緣起性空」的般若智慧，破除一切有相執著。', time: '22年' },
-                { title: '第五時：妙法蓮華經', desc: '昭示一切眾生皆有佛性。', time: '8年' }
-            ]
-        };
+    labels: ['第一時:華嚴經', '第二時:阿含經', '第三時:方等經', '第四時:般若經(金剛經)', '第五時:法華涅槃經'],
+    data: [1, 12, 8, 22, 8],
+    colors: ['#E2E8F0', '#CBD5E1', '#94A3B8', '#DC2626', '#475569'],
+    details: [
+        { title: '第一時：華嚴經', desc: '成道後三七日說，度諸大菩薩弟子。', time: '3週' },
+        { title: '第二時：阿含經', desc: '十二年說，度聲聞、緣覺弟子。', time: '12年' },
+        { title: '第三時：方等經（諸部大乘經）', desc: '八年說諸部大乘經、三藏十二部廣談，藏、通、別、圓四教化度不同根基的弟子。', time: '8年' },
+        { title: '第四時：般若經', desc: '包含《金剛經》。講述「緣起性空」的般若智慧，破除一切有相執著。', time: '22年' },
+        { title: '第五時：妙法蓮華經', desc: '昭示一切眾生皆有佛性。', time: '8年' }
+    ]
+};
 
-        const glossaryTerms = [
-            { term: '涅槃 (三種)', def: '心達寂靜，不被塵事所影響，也就是不動心。<br>1. <b>有餘涅槃</b>：願力未完成，業障已消除圓滿。<br>2. <b>無餘涅槃</b>：願力已完成，業障已消除圓滿。<br>3. <b>無所住處涅槃</b>：願力業障皆圓滿，且貫穿三界內外十方。' },
-            { term: '四相', def: '<b>我相</b> (自私/自我中心)、<b>人相</b> (愛比較計較)、<b>眾生相</b> (貪嗔癡慢疑集合)、<b>壽者相</b> (有所求/貪求功德壽命)。' },
-            { term: '四果位', def: '<b>須陀洹</b>(瞭解四聖諦/修十善)、<b>斯陀含</b>(了解十二因緣/去除貪嗔癡)、<b>阿那含</b>(宿命業圓滿/斷盡喜怒哀樂欲)、<b>阿羅漢</b>(心出六道/永離三界)。' },
-            { term: '忍辱 (三種)', def: '內心包容為忍，外境橫逆為辱。<br>1. <b>生忍</b>：忍了但內心忿怒不平。<br>2. <b>法忍</b>：忍了並學習原諒放下。<br>3. <b>無生法忍</b>：內心已無生忍與法忍這回事，順逆境不動搖。' },
-            { term: '般若 (三層次)', def: '1. <b>文字般若</b>：只口念不解意。<br>2. <b>觀照般若</b>：了解經義且實修改變壞習性。<br>3. <b>實相般若</b>：完全改變壞習性，謹守十善業。' },
-            { term: '四空', def: '<b>身空</b> (知身是幻借假修真)、<b>心空</b> (不被妄念牽引安住自心)、<b>性空</b> (隨機渡化不求功果)、<b>法空</b> (知法是引導工具不被綁住)。' },
-            { term: '印契佛旨', def: '完全與佛心心相應，心性與佛一樣，廣渡眾生，稱為印契佛旨。' },
-            { term: '莊嚴佛土', def: '佛土本身即莊嚴，莊嚴佛土其實是「莊嚴自己清淨的心」，簡單說就是改掉壞習慣。' }
-        ];
+const glossaryTerms = [
+    { term: '涅槃 (三種)', def: '心達寂靜，不被塵事所影響，也就是不動心。<br>1. <b>有餘涅槃</b>：願力未完成，業障已消除圓滿。<br>2. <b>無餘涅槃</b>：願力已完成，業障已消除圓滿。<br>3. <b>無所住處涅槃</b>：願力業障皆圓滿，且貫穿三界內外十方。' },
+    { term: '四相', def: '<b>我相</b> (自私/自我中心)、<b>人相</b> (愛比較計較)、<b>眾生相</b> (貪嗔癡慢疑集合)、<b>壽者相</b> (有所求/貪求功德壽命)。' },
+    { term: '四果位', def: '<b>須陀洹</b>(瞭解四聖諦/修十善)、<b>斯陀含</b>(了解十二因緣/去除貪嗔癡)、<b>阿那含</b>(宿命業圓滿/斷盡喜怒哀樂欲)、<b>阿羅漢</b>(心出六道/永離三界)。' },
+    { term: '忍辱 (三種)', def: '內心包容為忍，外境橫逆為辱。<br>1. <b>生忍</b>：忍了但內心忿怒不平。<br>2. <b>法忍</b>：忍了並學習原諒放下。<br>3. <b>無生法忍</b>：內心已無生忍與法忍這回事，順逆境不動搖。' },
+    { term: '般若 (三層次)', def: '1. <b>文字般若</b>：只口念不解意。<br>2. <b>觀照般若</b>：了解經義且實修改變壞習性。<br>3. <b>實相般若</b>：完全改變壞習性，謹守十善業。' },
+    { term: '四空', def: '<b>身空</b> (知身是幻借假修真)、<b>心空</b> (不被妄念牽引安住自心)、<b>性空</b> (隨機渡化不求功果)、<b>法空</b> (知法是引導工具不被綁住)。' },
+    { term: '印契佛旨', def: '完全與佛心心相應，心性與佛一樣，廣渡眾生，稱為印契佛旨。' },
+    { term: '莊嚴佛土', def: '佛土本身即莊嚴，莊嚴佛土其實是「莊嚴自己清淨的心」，簡單說就是改掉壞習慣。' }
+];
 
-        // FULL 32 Lessons Extracted from Source Document
-        const lessons = [
-            { 
-                id: 1, 
-                title: '法會因由', 
-                dialogue: `弟子阿難說：「我是這樣聽佛祖說的，那時已經到吃飯時間，所有弟子穿了袈裟，拿著飯缽去乞食。佛祖也和大家一樣，吃完了飯，將衣缽收拾乾淨，也洗淨了腳，親自在地上舖好座位坐下來。」`, 
-                note: `第一課佛祖做的很清楚，人還是要吃飯，還是要工作，衣缽收拾乾淨，也就是要把人的本份做好，一切要圓滿。很多人認為修行和工作或家庭是互相拉扯的，其實是錯誤觀念。修行是修心修性，是情緒管理，是落實在工作與家庭當中。
+const lessons = [
+    { 
+        id: 1, 
+        title: '法會因由', 
+        dialogue: `弟子阿難說：「我是這樣聽佛祖說的，那時已經到吃飯時間，所有弟子穿了袈裟，拿著飯缽去乞食。佛祖也和大家一樣，吃完了飯，將衣缽收拾乾淨，也洗淨了腳，親自在地上舖好座位坐下來。」`, 
+        note: `第一課佛祖做的很清楚，人還是要吃飯，還是要工作，衣缽收拾乾淨，也就是要把人的本份做好，一切要圓滿。很多人認為修行和工作或家庭是互相拉扯的，其實是錯誤觀念。修行是修心修性，是情緒管理，是落實在工作與家庭當中。
 
 所以「先顧腹肚，才顧佛祖」這句話是錯的，佛祖還需我們顧嗎？第一課就是如此簡單，一切人性化。阿彌陀佛。`
-            },
-            { 
-                id: 2, 
-                title: '善現啟請', 
-                dialogue: `學生（菩薩、天人）問：「釋尊，若眾生善男善女發了無上正等正覺的菩提心時，要如何才能讓這個菩提心永恆而不退轉呢？如果他們起了妄念的時候，又要怎樣去降伏他的妄心呢？」
+    },
+    { 
+        id: 2, 
+        title: '善現啟請', 
+        dialogue: `學生（菩薩、天人）問：「釋尊，若眾生善男善女發了無上正等正覺的菩提心時，要如何才能讓這個菩提心永恆而不退轉呢？如果他們起了妄念的時候，又要怎樣去降伏他的妄心呢？」
 
 佛祖回答：「問的好，大家仔細用心聽，我來為你們解說。」
 
 學生們回答：「願樂欲聞！」（很樂意聽釋尊講法）`, 
-                note: `第二課的解釋就僅這樣，第三課就開始菩薩發問，佛祖回答。金剛經全部在問與答，所以第二課的課名才稱為「善現啟請」，也就是所有的善知識啟請佛祖開示大法。阿彌陀佛。` 
-            },
-            { 
-                id: 3, 
-                title: '大乘正宗', 
-                dialogue: `佛祖告訴須菩提說：「諸位菩薩按照我所說的方法，降伏妄念心，才可常住菩提心。降伏妄心的方法，就是要不著一切眾生相。我把一切眾生分為九類：卵生、胎生、濕生、化生、有色、無色、有想、無想、非有無想等眾生。我要為所有眾生滅他們的業障，渡他們超脫六道輪迴，以至於到達清淨涅槃之地。
+        note: `第二課的解釋就僅這樣，第三課就開始菩薩發問，佛祖回答。金剛經全部在問與答，所以第二課的課名才稱為「善現啟請」，也就是所有的善知識啟請佛祖開示大法。阿彌陀佛。` 
+    },
+    { 
+        id: 3, 
+        title: '大乘正宗', 
+        dialogue: `佛祖告訴須菩提說：「諸位菩薩按照我所說的方法，降伏妄念心，才可常住菩提心。降伏妄心的方法，就是要不著一切眾生相。我把一切眾生分為九類：卵生、胎生、濕生、化生、有色、無色、有想、無想、非有無想等眾生。我要為所有眾生滅他們的業障，渡他們超脫六道輪迴，以至於到達清淨涅槃之地。
 
 話又說回來，我雖然這樣渡拔，但是一切眾生並非我渡拔。因為眾生與菩薩一樣有菩提心，只是被妄心遮蔽，若能歸清淨，也是本來所俱足的佛性，也是自性自渡，並非是我所渡的。」
 
 學生問佛祖：「若學生有『它是我渡的』念頭呢？」
 
 佛祖回答：「即是著我相、人相、眾生相、壽者相。若有這四相的想法，即心性尚未達到寂靜，自然不是菩薩佛子。」`, 
-                note: `《大乘正宗》無我利他的菩薩正宗修行法門，稱為大乘正宗法門，就是師兄常說的遠離四相。阿彌陀佛。`,
-                extra: `<div class="bg-amber-50 p-4 rounded mt-4 border border-amber-200 text-sm"><h5 class="font-bold text-[#8B0000] mb-2">【第三課專有名詞解釋】</h5><ul class="list-disc pl-5 space-y-1"><li><strong>我相：</strong> 有我的看法，我的自私。</li><li><strong>人相：</strong> 愛計較，愛比較。</li><li><strong>眾生相：</strong> 具足貪嗔癡慢疑。</li><li><strong>壽者相：</strong> 有所求，或覺得「我做了多少功德」、「我渡拔多少眾生」。</li><li><strong>涅槃：</strong> 真正意思是「心達寂靜，不被塵事影響」，分有餘、無餘、無所住處三種。</li></ul></div>`
-            },
-            { 
-                id: 4, 
-                title: '妙行無住', 
-                dialogue: `佛祖對學生說：「一個佛弟子修法應不執著法執，行善佈施應不執著相佈施。對佈施人、受施者、佈施物，應充滿法喜而忘記此事。
+        note: `《大乘正宗》無我利他的菩薩正宗修行法門，稱為大乘正宗法門，就是師兄常說的遠離四相。阿彌陀佛。`,
+        extra: `<div class="bg-amber-50 p-4 rounded mt-4 border border-amber-200 text-sm"><h5 class="font-bold text-[#8B0000] mb-2">【第三課專有名詞解釋】</h5><ul class="list-disc pl-5 space-y-1"><li><strong>我相：</strong> 有我的看法，我的自私。</li><li><strong>人相：</strong> 愛計較，愛比較。</li><li><strong>眾生相：</strong> 具足貪嗔癡慢疑。</li><li><strong>壽者相：</strong> 有所求，或覺得「我做了多少功德」、「我渡拔多少眾生」。</li><li><strong>涅槃：</strong> 真正意思是「心達寂靜，不被塵事影響」，分有餘、無餘、無所住處三種。</li></ul></div>`
+    },
+    { 
+        id: 4, 
+        title: '妙行無住', 
+        dialogue: `佛祖對學生說：「一個佛弟子修法應不執著法執，行善佈施應不執著相佈施。對佈施人、受施者、佈施物，應充滿法喜而忘記此事。
 
 為什麼呢？若佛弟子不住相佈施，那才是真正的大福德；若經常提起或記起做了多少善事，那只是小福德；若能忘記所行之善事，那才是真功德，其福德之大如東西南北四維上下虛空之大。這樣才是修菩薩心法的佛弟子。」`, 
-                note: `第四課《妙行無住》就是「妙智慧的行善是不把此事放在心中」的簡稱。阿彌陀佛。` 
-            },
-            { 
-                id: 5, 
-                title: '如理實見', 
-                dialogue: `佛祖對學生說：「學佛的人，最難破的相，就是『佛相』和『法相』。一般人認為拜佛像就是學佛、就是修行，其實這是入學初步。拜佛像會啟發我們的慈悲心，慢慢學會止惡行善，但還是執著我相、人相、眾生相、壽者相修行，尚未離四相。
+        note: `第四課《妙行無住》就是「妙智慧的行善是不把此事放在心中」的簡稱。阿彌陀佛。` 
+    },
+    { 
+        id: 5, 
+        title: '如理實見', 
+        dialogue: `佛祖對學生說：「學佛的人，最難破的相，就是『佛相』和『法相』。一般人認為拜佛像就是學佛、就是修行，其實這是入學初步。拜佛像會啟發我們的慈悲心，慢慢學會止惡行善，但還是執著我相、人相、眾生相、壽者相修行，尚未離四相。
 
 因為三世諸佛，共一法身。意思是過去、現在、未來的一切佛菩薩，都是共同的法願——利益眾生。而學佛的人，應當學習三世諸佛的心，而不應只求於拜佛像。
 
 所以這課最重要的一句話就是，『凡所有相，皆是虛妄，若見諸相非相，即見如來』。」`, 
-                note: `所謂「諸相非相」簡單解釋：佛祖心、菩薩心、媽祖心、帝君心、觀音心、城隍心、耶穌心、孔子心，一切所有的心都只為眾生。如果能不執著法像修持，直接頓悟佛心，即見如來真性。而這如來真性，是我們本來俱足，只是被塵物所蒙蔽。
+        note: `所謂「諸相非相」簡單解釋：佛祖心、菩薩心、媽祖心、帝君心、觀音心、城隍心、耶穌心、孔子心，一切所有的心都只為眾生。如果能不執著法像修持，直接頓悟佛心，即見如來真性。而這如來真性，是我們本來俱足，只是被塵物所蒙蔽。
 
 以上解釋，若有不懂，希望大家發問。第五課《如理實見》，如來佛心之理，實修諸佛心法，不執外相，即可見。阿彌陀佛。` 
-            },
-            { 
-                id: 6, 
-                title: '正信希有', 
-                dialogue: `學生問佛祖：「老師您說的不要執著佈施的功德，和所謂見諸相非相即見如來的妙理，一般的人聽了能深信瞭解嗎？」
+    },
+    { 
+        id: 6, 
+        title: '正信希有', 
+        dialogue: `學生問佛祖：「老師您說的不要執著佈施的功德，和所謂見諸相非相即見如來的妙理，一般的人聽了能深信瞭解嗎？」
 
 佛祖回答：「我相信我死後五百年，只要有唸經及持守戒律、廣修福德的人，看到此經文中的一章或一句，自頓開智慧，因為這人善根深厚。
 
@@ -171,26 +274,26 @@ const periodsData = {
 而我說的法，只是要你們假借此法而離四相，見到你們原本清淨的心，讓你們脫離生死苦海。當你們證得涅槃時，就必須捨去此法，就好比坐船到對岸，到了就要把船放下，不要把船背在身上。
 
 【法尚應捨，何況非法】意思是說：連我說的正法都要捨去，因沒捨還是有法執；何況不是佛法的世間法，又為什麼堅持不捨呢？一切萬法都只是渡拔眾生的工具啊，千萬別執著。」`, 
-                note: `以上第六課比較深奧，但師兄很白話解釋，若有不懂可回應。第六課《正信希有》，正法的信仰講不執著離四相，此希有的道理，雖難以了解，卻是成佛之道，所以稱為《正信希有》。阿彌陀佛。` 
-            },
-            { 
-                id: 7, 
-                title: '無得無說', 
-                dialogue: `佛祖說：「同學們，你們認為我有說一定之法嗎？」
+        note: `以上第六課比較深奧，但師兄很白話解釋，若有不懂可回應。第六課《正信希有》，正法的信仰講不執著離四相，此希有的道理，雖難以了解，卻是成佛之道，所以稱為《正信希有》。阿彌陀佛。` 
+    },
+    { 
+        id: 7, 
+        title: '無得無說', 
+        dialogue: `佛祖說：「同學們，你們認為我有說一定之法嗎？」
 
 學生回答：「我知道老師講的意思，沒有一定的法，才是名為無上正等正覺，也沒有一定的法可說。因為老師說的法，可以心悟，而不可『以色相取法』。為什麼呢？因為一切的天人或聖賢，皆修觀自在心悟法門自修，只是隨各人所修程度、根基不同，而所證悟就有差別。所以沒有一定的法門，要渡化眾生，必須依眾生程度，因材施教。」`, 
-                note: `第七課《無得無說》。一般人認為取得有形的物體，稱為「物得」，這是一種「事障」；一般人認為修行有法可得，這是一種「法執」，這是一種「理障」。
+        note: `第七課《無得無說》。一般人認為取得有形的物體，稱為「物得」，這是一種「事障」；一般人認為修行有法可得，這是一種「法執」，這是一種「理障」。
 
 無得，就是要破除事障和理障。因為一切萬物或萬法，都只是修行的比喻說，並不是一定之法。佛祖所說的法，只是為了普渡眾生，而眾生尚未得渡之前，稱為「法」；若已得渡了，即應捨法。
 
 但取法與捨法都只是語言與文字之障礙，所以真的無上正等正覺法，真的是《無得無說》，只能心悟。
 怎麼都沒人發問啊，真的都懂喔，太棒了，各位應都到了取法又捨法的心悟之境。`,
-                extra: `<div class="bg-amber-50 p-4 rounded mt-4 border border-amber-200 text-sm"><h5 class="font-bold text-[#8B0000] mb-2">【阿耨多羅三藐三菩提：無上正等正覺】</h5><ul class="list-disc pl-5 space-y-1"><li><strong>正覺：</strong> 破除我執和法執，改掉壞習性，達到自己覺悟之地。</li><li><strong>正等：</strong> 證得正覺並弘揚佛法渡他，等於菩薩自覺覺他之學位。</li><li><strong>無上：</strong> 願力融於虛空法界，普渡眾生，如光中化佛無數億。</li></ul></div>`
-            },
-            { 
-                id: 8, 
-                title: '依法出生', 
-                dialogue: `佛祖問學生：「如果有人用很多的金銀七寶來行佈施，你認為這個人所得的福德難道不多嗎？」
+        extra: `<div class="bg-amber-50 p-4 rounded mt-4 border border-amber-200 text-sm"><h5 class="font-bold text-[#8B0000] mb-2">【阿耨多羅三藐三菩提：無上正等正覺】</h5><ul class="list-disc pl-5 space-y-1"><li><strong>正覺：</strong> 破除我執和法執，改掉壞習性，達到自己覺悟之地。</li><li><strong>正等：</strong> 證得正覺並弘揚佛法渡他，等於菩薩自覺覺他之學位。</li><li><strong>無上：</strong> 願力融於虛空法界，普渡眾生，如光中化佛無數億。</li></ul></div>`
+    },
+    { 
+        id: 8, 
+        title: '依法出生', 
+        dialogue: `佛祖問學生：「如果有人用很多的金銀七寶來行佈施，你認為這個人所得的福德難道不多嗎？」
 
 學生回答：「老師，當然是很多，但畢竟還是取相的福德。若能實修不執著相的佈施，那這福德即變成無量功德。」
 
@@ -199,25 +302,25 @@ const periodsData = {
 學生說：「我懂了，因為一切佛菩薩，能成就佛的無上正等正覺，皆是從此金剛經實修而緣生。」
 
 老師回答：「但要注意，金剛經並不是佛法。意思是說本來就沒有佛法可言，老師只是為了開悟眾生，替它取名為佛法而已。所以所謂的佛法，就不是佛法。記住，法非法。」`, 
-                note: `第八課《依法出生》。佛祖所說的金剛經，旨在破除種種業障，破除有相障礙。較淺可以教化眾生不要執著我相人相，較深的可以啟悟修行者不要執著於法相。一切的眾生修行成佛，都是依照此法修行而出生，所以稱為《依法出生》。阿彌陀佛。` 
-            },
-            { 
-                id: 9, 
-                title: '一相無相', 
-                dialogue: `佛祖問學生：「你認為一個修行的佛子，是否要預念自己已經證得『須陀洹果位』或『斯陀含果位』或『阿那含果位』亦或『阿羅漢果位』呢？」
+        note: `第八課《依法出生》。佛祖所說的金剛經，旨在破除種種業障，破除有相障礙。較淺可以教化眾生不要執著我相人相，較深的可以啟悟修行者不要執著於法相。一切的眾生修行成佛，都是依照此法修行而出生，所以稱為《依法出生》。阿彌陀佛。` 
+    },
+    { 
+        id: 9, 
+        title: '一相無相', 
+        dialogue: `佛祖問學生：「你認為一個修行的佛子，是否要預念自己已經證得『須陀洹果位』或『斯陀含果位』或『阿那含果位』亦或『阿羅漢果位』呢？」
 
 學生回答：「老師，一個佛子，如果認為自己已經證得以上所言的『正覺』這些果位，或認為自己已是『正等』的菩薩果位，或認為自己已是『無上』的佛果位，那這位佛子將沒證得任何果位。因為這佛子還在我相、人相、眾生相、壽者相之中。」
 
 佛祖說：「回答的很好。因為這些果位是『情緒管理』心性修持所證得的。貪念太重、容易發脾氣、太癡迷物質享受，都沒證得任何果位。因為一個真正的佛子，不會有得道的念頭，更不會有得果位的念頭，也沒有貪生或怕死的念頭，只有奉獻的念頭。」`, 
-                note: `第九課《一相無相》講解完成，阿彌陀佛。什麼是《一相無相》呢？一切的數字都在一與零之間，一切的萬法也在一與零之間，萬物從無到有，到一變成萬物，一切在一相之中，一相即從無相而來。所以才稱為《一相無相》。當你行善不求一相，迴向無相虛空法界，即是《一相無相》。
+        note: `第九課《一相無相》講解完成，阿彌陀佛。什麼是《一相無相》呢？一切的數字都在一與零之間，一切的萬法也在一與零之間，萬物從無到有，到一變成萬物，一切在一相之中，一相即從無相而來。所以才稱為《一相無相》。當你行善不求一相，迴向無相虛空法界，即是《一相無相》。
 
 以上均是心性修持、情緒管理，也是修養的程度。喜歡動怒的師兄姊，可別讓師弟妹看笑話喔！所以古人說：「一把無明火，燒毀整片功德林」，就是修養不夠啦，那如何成為師兄姊？又如何以德服人？阿彌陀佛。`,
-                extra: `<div class="bg-amber-50 p-4 rounded mt-4 border border-amber-200 text-sm"><h5 class="font-bold text-[#8B0000] mb-2">【四果位解釋】</h5><ul class="list-disc pl-5 space-y-1"><li><strong>須陀洹：</strong> 瞭解四聖諦，實修十善業。</li><li><strong>斯陀含：</strong> 了解十二因緣，完全去除貪嗔痴慢疑，情緒不起伏。</li><li><strong>阿那含：</strong> 宿命業圓滿，斷盡喜怒哀樂愛惡慾煩惱。</li><li><strong>阿羅漢：</strong> 心出六道，永離三界，遠離取相著相。</li></ul></div>`
-            },
-            { 
-                id: 10, 
-                title: '莊嚴淨土', 
-                dialogue: `佛祖問學生：「妳認為老師以前在我師父燃燈佛那裡有得到法嗎？」
+        extra: `<div class="bg-amber-50 p-4 rounded mt-4 border border-amber-200 text-sm"><h5 class="font-bold text-[#8B0000] mb-2">【四果位解釋】</h5><ul class="list-disc pl-5 space-y-1"><li><strong>須陀洹：</strong> 瞭解四聖諦，實修十善業。</li><li><strong>斯陀含：</strong> 了解十二因緣，完全去除貪嗔痴慢疑，情緒不起伏。</li><li><strong>阿那含：</strong> 宿命業圓滿，斷盡喜怒哀樂愛惡慾煩惱。</li><li><strong>阿羅漢：</strong> 心出六道，永離三界，遠離取相著相。</li></ul></div>`
+    },
+    { 
+        id: 10, 
+        title: '莊嚴淨土', 
+        dialogue: `佛祖問學生：「妳認為老師以前在我師父燃燈佛那裡有得到法嗎？」
 學生回答：「沒有，沒法可得。老師若有法可得，即是著相，如何成佛？」
 
 佛祖又問：「同學，妳認為一個佛弟子發心從事莊嚴佛土，真的有佛土可莊嚴嗎？」
@@ -227,35 +330,35 @@ const periodsData = {
 
 佛祖又問：「同學，如果有人長得和高山一樣大，妳認為他的身形真的很大嗎？」
 學生回答：「是非常大，老師。但此人身形雖大，也是有生有滅，終受輪迴。就如世間人，再如何富有，若不行善實修，終受輪迴。而老師妳說的『莊嚴佛土』乃是清淨本心，此心貫穿十方虛空法界，無相無住，豈是有形相的大身或富有所能比量？大身或富有，這只是一個假相而已。」`, 
-                note: `第十課《莊嚴佛土》記住喔，是莊嚴自己的心。要如何莊嚴自己的心？從去除貪嗔癡慢疑做起，再行十善業：不殺生、不偷盜、不邪淫、不妄語、不綺語、不兩舌、不惡口、不貪心、不生氣、不癡迷。阿彌陀佛。` 
-            },
-            { 
-                id: 11, 
-                title: '無為福勝', 
-                dialogue: `佛祖說：「同學們，如果用恆河所有的沙數來做比喻，一粒沙比喻一恆河，那麼恆河所有的沙，你認為多嗎？」
+        note: `第十課《莊嚴佛土》記住喔，是莊嚴自己的心。要如何莊嚴自己的心？從去除貪嗔癡慢疑做起，再行十善業：不殺生、不偷盜、不邪淫、不妄語、不綺語、不兩舌、不惡口、不貪心、不生氣、不癡迷。阿彌陀佛。` 
+    },
+    { 
+        id: 11, 
+        title: '無為福勝', 
+        dialogue: `佛祖說：「同學們，如果用恆河所有的沙數來做比喻，一粒沙比喻一恆河，那麼恆河所有的沙，你認為多嗎？」
 同學回答：「非常多，老師。」
 
 佛祖又說：「如果有人用像恆河沙數那麼多的三千大千世界的七寶來佈施，那他的福德多嗎？」
 學生回答：「當然很多啊，老師。」
 
 佛祖又告訴同學：「其實不是以數量的多和少來計算福德。無所求的行善，自然比有所求的行善福德要大的多，千萬不可以數量計算福德。另外，如果有人為他人講經說法，而能讓人受持四句偈，了解身空、心空、性空、法空，而這樣的『法佈施』所得的福德，又勝過前面用七寶佈施所得之福德來的多了。」`, 
-                note: `第十一課《無為福勝》。無為就是無所求，所以稱為無所求的行善福德最勝，簡稱「無為福勝」。
+        note: `第十一課《無為福勝》。無為就是無所求，所以稱為無所求的行善福德最勝，簡稱「無為福勝」。
 
 以上希望大家能明瞭。農曆七月是孝親月，如果你們能講白話經文給祖先們聽，是可以渡拔超薦祖先成就佛果的。阿彌陀佛。`,
-                extra: `<div class="bg-amber-50 p-4 rounded mt-4 border border-amber-200 text-sm"><h5 class="font-bold text-[#8B0000] mb-2">【四空解釋】</h5><ul class="list-disc pl-5 space-y-1"><li><strong>身空：</strong> 知身是幻，九孔常流不淨，借此幻身修行。</li><li><strong>心空：</strong> 觀照內心無貪嗔癡，不被妄念牽引。</li><li><strong>性空：</strong> 安住自心，於環境中隨機渡化，不求功果。</li><li><strong>法空：</strong> 知一切法皆是引導眾生的工具（如水洗塵），不被綁住。</li></ul></div>`
-            },
-            { 
-                id: 12, 
-                title: '尊重正教', 
-                dialogue: `佛祖說：「同學們，若有人在任何地方，演說此經，或者只說四句偈的道理，而使那些聽到的人消除妄念，應該知道遇到說此經的地方十分難得。一切世間的天人鬼神等，對於此說法之地，皆應恭敬供養，作禮散花，如供養佛的塔廟一樣。
+        extra: `<div class="bg-amber-50 p-4 rounded mt-4 border border-amber-200 text-sm"><h5 class="font-bold text-[#8B0000] mb-2">【四空解釋】</h5><ul class="list-disc pl-5 space-y-1"><li><strong>身空：</strong> 知身是幻，九孔常流不淨，借此幻身修行。</li><li><strong>心空：</strong> 觀照內心無貪嗔癡，不被妄念牽引。</li><li><strong>性空：</strong> 安住自心，於環境中隨機渡化，不求功果。</li><li><strong>法空：</strong> 知一切法皆是引導眾生的工具（如水洗塵），不被綁住。</li></ul></div>`
+    },
+    { 
+        id: 12, 
+        title: '尊重正教', 
+        dialogue: `佛祖說：「同學們，若有人在任何地方，演說此經，或者只說四句偈的道理，而使那些聽到的人消除妄念，應該知道遇到說此經的地方十分難得。一切世間的天人鬼神等，對於此說法之地，皆應恭敬供養，作禮散花，如供養佛的塔廟一樣。
 
 何況有些佛弟子，能完全受持、讀頌、弘法，當然是更值得尊敬了。這些佛弟子成就世上第一希有之法，成就無上菩提。世上所有萬法最後皈向『般若法』中。正因如此，所以若是有般若經典所在之處，即有佛在。同學們要像尊重佛一樣，尊重此經。」`, 
-                note: `《尊重正教》即是尊重萬法之源頭——般若法門。阿彌陀佛。` 
-            },
-            { 
-                id: 13, 
-                title: '如法受持', 
-                dialogue: `學生問老師：「講到現在，這本經該取何名？」
+        note: `《尊重正教》即是尊重萬法之源頭——般若法門。阿彌陀佛。` 
+    },
+    { 
+        id: 13, 
+        title: '如法受持', 
+        dialogue: `學生問老師：「講到現在，這本經該取何名？」
 老師回答：「原不該有名，因一切法需眾生自己體悟，若取名也是著四相之中。但不取名又擔心眾生斷章取義，誤導佛子，因此取經名為《金剛般若波羅蜜》，你們要依法奉持。」
 
 老師問同學們：「你們認為可以以三十二相看見如來嗎？」
@@ -264,12 +367,12 @@ const periodsData = {
 老師又問：「如果有人以犧牲生命來佈施，和另有一人解說此經解釋，何者福德甚多？」
 學生回答：「犧牲生命是無我的奉獻，福德當然多，但尚未到達渡拔眾生解脫成佛；而講解此經卻能無量無邊渡拔一切苦難眾生成就佛果。也沒有多與不多，因要成就菩薩願，既已無所求福德了。」
 老師回答：「很好。」`, 
-                note: `第十三課《如法受持》是依法而修的意思。師兄已用很白話文解釋，希望大家看的懂。阿彌陀佛。` 
-            },
-            { 
-                id: 14, 
-                title: '離相寂滅', 
-                dialogue: `佛祖說：「思想要遠離一切幻相，世間一切的相，都是幻影。一般的人卻都執著於取與捨而生妄念的心，而這些世間的迷惑幻境，又時時薰陶著我們。我們的心被外塵相所遮蔽了，終日為環境所轉，因起了貪念、嗔恨心、癡心而造業，因造業而受苦，一直輪迴輪轉，永無休止。若能修行離四相法，則無執著取得與捨得，內心不亂，自然外在的誘惑干擾不了我們，自然達到《離相寂滅》。」
+        note: `第十三課《如法受持》是依法而修的意思。師兄已用很白話文解釋，希望大家看的懂。阿彌陀佛。` 
+    },
+    { 
+        id: 14, 
+        title: '離相寂滅', 
+        dialogue: `佛祖說：「思想要遠離一切幻相，世間一切的相，都是幻影。一般的人卻都執著於取與捨而生妄念的心，而這些世間的迷惑幻境，又時時薰陶著我們。我們的心被外塵相所遮蔽了，終日為環境所轉，因起了貪念、嗔恨心、癡心而造業，因造業而受苦，一直輪迴輪轉，永無休止。若能修行離四相法，則無執著取得與捨得，內心不亂，自然外在的誘惑干擾不了我們，自然達到《離相寂滅》。」
 
 學生說：「老師，聽起來很簡單，但怎麼可能？請老師教導如何《離相寂滅》。」
 
@@ -279,24 +382,24 @@ const periodsData = {
 3. 無生法忍： 內心已經沒有生忍與法忍這回事，一切順逆境已經不能讓我們的心動搖。」
 
 學生回答：「弟子明白，感謝恩師。」`, 
-                note: `阿彌陀佛。` 
-            },
-            { 
-                id: 15, 
-                title: '持經功德', 
-                dialogue: `佛祖說：「如果有人聽說此經，而能篤信而不違逆，勸人手寫或口誦，或為人解說此經，或口誦渡拔十方眾生，使一切眾生能見本性，善根增長，實在是無邊無際的功德。
+        note: `阿彌陀佛。` 
+    },
+    { 
+        id: 15, 
+        title: '持經功德', 
+        dialogue: `佛祖說：「如果有人聽說此經，而能篤信而不違逆，勸人手寫或口誦，或為人解說此經，或口誦渡拔十方眾生，使一切眾生能見本性，善根增長，實在是無邊無際的功德。
 
 另外，如果有人持此金剛經典，廣為人宣揚佛法，印契佛旨，無論是在家或出家佛子，或在任何地方講說此經，那麼一切的天人、護法、天龍八部皆來供養。如此的場地，等於是佛塔之地，善神護法皆來圍繞。」
 
 學生問：「什麼是印契佛旨？」
 
 佛祖回答：「只是口念，不解其意思，稱為『文字般若』。了解佛經意思，且有在實修改變自己壞習性，稱為『觀照般若』。真正完全改變壞習性，謹守十善業，稱為『實相般若』。完全與佛心心相應，心性與佛一樣，廣渡眾生，稱為『印契佛旨』。」`, 
-                note: `吼，是不是很難阿，各位師弟妹。阿彌陀佛。` 
-            },
-            { 
-                id: 16, 
-                title: '能淨業障', 
-                dialogue: `佛祖說：「如果有善男子善女人，受持而且讀頌此經典，但卻不得他人的恭敬，又被人輕視，或遭家人反對，那是因為上輩子在身、口、意方面修的不圓滿，造下了惡緣惡業。如果此人能佈施持戒，宣揚讀頌此經，廣結善緣，一定能消除之前不被恭敬又被輕視的業障，罪滅而福生，依然可以成就菩薩道。」
+        note: `吼，是不是很難阿，各位師弟妹。阿彌陀佛。` 
+    },
+    { 
+        id: 16, 
+        title: '能淨業障', 
+        dialogue: `佛祖說：「如果有善男子善女人，受持而且讀頌此經典，但卻不得他人的恭敬，又被人輕視，或遭家人反對，那是因為上輩子在身、口、意方面修的不圓滿，造下了惡緣惡業。如果此人能佈施持戒，宣揚讀頌此經，廣結善緣，一定能消除之前不被恭敬又被輕視的業障，罪滅而福生，依然可以成就菩薩道。」
 
 學生問：「真的有因果業障嗎？」
 
@@ -307,12 +410,12 @@ const periodsData = {
 佛祖說：「因為持頌此經，慢慢的你會了解經文意義，自然你的身口意會改變，不會再貪嗔癡慢疑。自然不再造惡業，而且勤修奉行，迴向法界，自然消除累世業。」
 
 學生答：「感謝恩師，弟子謹記在心。」`, 
-                note: `阿彌陀佛。` 
-            },
-            { 
-                id: 17, 
-                title: '究竟無我', 
-                dialogue: `佛祖說：「說到渡眾生，世界上沒有一個人是我佛陀渡的了的。就如一個人戒菸、戒酒、戒賭、戒壞習慣，我佛陀講了再多法也沒有用，除非這個人想通了，願意自己戒掉。所以我說是我幫他戒的嗎？不是的。所以我說我沒渡拔任何人，一切都是眾生自悟自渡。」
+        note: `阿彌陀佛。` 
+    },
+    { 
+        id: 17, 
+        title: '究竟無我', 
+        dialogue: `佛祖說：「說到渡眾生，世界上沒有一個人是我佛陀渡的了的。就如一個人戒菸、戒酒、戒賭、戒壞習慣，我佛陀講了再多法也沒有用，除非這個人想通了，願意自己戒掉。所以我說是我幫他戒的嗎？不是的。所以我說我沒渡拔任何人，一切都是眾生自悟自渡。」
 
 學生問老師：「這和《究竟無我》有什麼關係？」
 
@@ -325,12 +428,12 @@ const periodsData = {
 同學們，記住，一個佛弟子，一定要有《究竟無我》的心。不可以有：我想、我要、我認為、這是我渡的、我是師兄姊，了解嗎？」
 
 學生答：「感謝恩師。」`, 
-                note: `阿彌陀佛。` 
-            },
-            { 
-                id: 18, 
-                title: '一體同觀', 
-                dialogue: `佛祖說：「心、佛、眾生，三者是一體的，眾生心中皆有佛性。所不同的是眾生往返六道，一直在六道輪迴之中，隨著自己所造的業報輪轉，迷失了本來清淨本體；佛菩薩因了解一切皆妄心幻相，而一切圓滿了悟真心清淨。」
+        note: `阿彌陀佛。` 
+    },
+    { 
+        id: 18, 
+        title: '一體同觀', 
+        dialogue: `佛祖說：「心、佛、眾生，三者是一體的，眾生心中皆有佛性。所不同的是眾生往返六道，一直在六道輪迴之中，隨著自己所造的業報輪轉，迷失了本來清淨本體；佛菩薩因了解一切皆妄心幻相，而一切圓滿了悟真心清淨。」
 
 學生說：「老師，那是不是去除了妄心就能找回清淨心呢？」
 
@@ -341,12 +444,12 @@ const periodsData = {
 另外，還要除四相，就是去除：我相、人相、眾生相、壽者相。」
 
 學生答：「感謝恩師。」`, 
-                note: `吼，真心真難找。阿彌陀佛。` 
-            },
-            { 
-                id: 19, 
-                title: '法界通化', 
-                dialogue: `佛祖說：「心性的修持要達到法界通化的境界才行，要與法界溶為一體。」
+        note: `吼，真心真難找。阿彌陀佛。` 
+    },
+    { 
+        id: 19, 
+        title: '法界通化', 
+        dialogue: `佛祖說：「心性的修持要達到法界通化的境界才行，要與法界溶為一體。」
 學生答：「這很難吧？」
 
 佛祖說：「以佈施而言，要不執著功德，要忘記佈施人、佈施物、受施者，不求功德才是真功德，不求福德才是真福德。把行善當成生活中的一部分，把法界眾生當成自己的家人，長時薰修自己的心，自然能與法界通化，穿梭三界，通達無阻。」
@@ -354,140 +457,140 @@ const periodsData = {
 學生答：「弟子明白了。當越想求越求不到，當越想學卻學不到。很多人想學神通力卻學不到，因為他執著功德，執著他所做的一切。只要他放下一切，不執、不求，無我利眾，長時薰修，到達法界通化，自然俱足一切。」
 
 佛祖言：「有進步。」`, 
-                note: `阿彌陀佛。` 
-            },
-            { 
-                id: 20, 
-                title: '離色離相', 
-                dialogue: `佛祖說：「色就是物質，相就是名相。一般的佛弟子若已修持到不被世間物質的慾望所誘惑時，深層的修行要遠離『名相』的分別心。
+        note: `阿彌陀佛。` 
+    },
+    { 
+        id: 20, 
+        title: '離色離相', 
+        dialogue: `佛祖說：「色就是物質，相就是名相。一般的佛弟子若已修持到不被世間物質的慾望所誘惑時，深層的修行要遠離『名相』的分別心。
 
 一般的修行者，對自我認定的宗教才是對的；同樣的宗教弟子又分『我供奉的這尊才是開基的』；同門的師兄弟姊妹又會分『我學的方法是最棒的』。大家一直在找修行捷徑，所以到最後有人拜太陽和宇宙了，因為他們是最古老的。
 
 其實我所講的不是外相的崇拜信仰，而是內心的修持道德觀。這就是《離色離相》。」`, 
-                note: `阿彌陀佛。` 
-            },
-            { 
-                id: 21, 
-                title: '非說所說', 
-                dialogue: `佛祖說：「同學們，我只是機緣相感，隨人悟性，從未有說法的念頭。如果有人說如來有所說法，這樣即是毀謗佛喲！那是此人拘於文字相中，沒了解我所說的道理。佛的真空妙理，遠離四相，何來之法？只是為了解除大眾迷惘的妄心而說的，此乃假藉名詞稱之為『說法』而已。實際上我並沒說法，因大眾的妄心不同，所以根本沒有一定的法可說。」
+        note: `阿彌陀佛。` 
+    },
+    { 
+        id: 21, 
+        title: '非說所說', 
+        dialogue: `佛祖說：「同學們，我只是機緣相感，隨人悟性，從未有說法的念頭。如果有人說如來有所說法，這樣即是毀謗佛喲！那是此人拘於文字相中，沒了解我所說的道理。佛的真空妙理，遠離四相，何來之法？只是為了解除大眾迷惘的妄心而說的，此乃假藉名詞稱之為『說法』而已。實際上我並沒說法，因大眾的妄心不同，所以根本沒有一定的法可說。」
 
 學生問：「老師，恐怕未來所有的眾生，聽到這個理論——無法之法，無說之說，如果聽不懂，不知能否對此金剛經有信心否？」
 
 佛祖回答：「眾生皆具佛性，所以佛與眾生本無差別，只是他們尚未解脫妄心而已。如果能放下塵緣，即可立地成佛。其實『眾生』這名詞，也只是假借的名詞而已。希望同學們不要被文字相所綁住。」`, 
-                note: `這課的《非說所說》是希望大家不要執著於法執，不要有宗教對立、派別對立、法門對立，因一切都是為了救助疾苦，何需對立？一切沒有定法，放下法執，所以如來從無說法。阿彌陀佛。` 
-            },
-            { 
-                id: 22, 
-                title: '無法可得', 
-                dialogue: `學生問佛祖：「老師，您已證得了無上正等正覺菩提心，為何說您無所得呢？」
+        note: `這課的《非說所說》是希望大家不要執著於法執，不要有宗教對立、派別對立、法門對立，因一切都是為了救助疾苦，何需對立？一切沒有定法，放下法執，所以如來從無說法。阿彌陀佛。` 
+    },
+    { 
+        id: 22, 
+        title: '無法可得', 
+        dialogue: `學生問佛祖：「老師，您已證得了無上正等正覺菩提心，為何說您無所得呢？」
 
 佛祖說：「真的是無所得。同學們，凡是可以用得失來衡量的都是身外之物。你的意念有得與失，這已經是妄念了。老師講的無上正等正覺菩提心法，人人俱足，只是你們的心被塵事物蒙蔽了，而迷失本性。老師講太多也無法改變你們，所以真的無法可得。除非你們放下塵緣。
 
 切記，『無上正等正覺』是老師假借這名詞讓你們參悟的方向，就如同手指著月亮的方向而已，可別又被這文字障礙住了。」`, 
-                note: `此課解釋完畢。阿彌陀佛。` 
-            },
-            { 
-                id: 23, 
-                title: '淨心行善', 
-                dialogue: `佛祖說：「同學們，我所說的無上正等正覺，是每個眾生都俱足的，都是平等的，沒有高下。佛與眾生也沒高下之分，只是佛已覺悟，眾生迷塵。
+        note: `此課解釋完畢。阿彌陀佛。` 
+    },
+    { 
+        id: 23, 
+        title: '淨心行善', 
+        dialogue: `佛祖說：「同學們，我所說的無上正等正覺，是每個眾生都俱足的，都是平等的，沒有高下。佛與眾生也沒高下之分，只是佛已覺悟，眾生迷塵。
 
 在真性中，原本就無我相，無人相，無眾生相，無壽者相。如果心中有此四相，即是受浮塵妄念所蒙蔽。所以只要能《淨心行善》的修一切善法，即可找回原本的清淨菩提心。
 
 但要記住，我說的『善法』兩字，也是法的形容詞。不要執著善，才是真善；如果執著善，就不是真善。」`, 
-                note: `以上師兄講示。阿彌陀佛。` 
-            },
-            { 
-                id: 24, 
-                title: '福智無比', 
-                dialogue: `佛祖說：「同學們，如果有人用三千大千世界之多的七寶財產或身體，甚至生命救人來行佈施，這是很大的福德福報。但無法免除眾生的生老病死所有煩惱，及輪轉六道之苦。
+        note: `以上師兄講示。阿彌陀佛。` 
+    },
+    { 
+        id: 24, 
+        title: '福智無比', 
+        dialogue: `佛祖說：「同學們，如果有人用三千大千世界之多的七寶財產或身體，甚至生命救人來行佈施，這是很大的福德福報。但無法免除眾生的生老病死所有煩惱，及輪轉六道之苦。
 
 但如果你受持、讀頌經文，了解字義，深入經藏，為人解說，使眾生轉念，使眾生開悟，能面對生老病死的煩惱障，脫離沉迷輪轉六道的塵障，這是無上功德，是成佛之因。」`, 
-                note: `阿彌陀佛。` 
-            },
-            { 
-                id: 25, 
-                title: '化無所化', 
-                dialogue: `佛祖說：「同學們，不要認為我在講經之時，我會有『我在渡化眾生』的念頭。同學切勿有這種想法。
+        note: `阿彌陀佛。` 
+    },
+    { 
+        id: 25, 
+        title: '化無所化', 
+        dialogue: `佛祖說：「同學們，不要認為我在講經之時，我會有『我在渡化眾生』的念頭。同學切勿有這種想法。
 
 為什麼呢？因為眾生的心，原本就俱足了般若智慧，如果他們聽經悟道，自可化渡自己，實在沒有眾生是被我度化的。一切都是眾生自悟自渡。若有眾生認為我能渡化一切，那麼我自己即著我相、人相、眾生相、壽者相。自己尚未渡化，又如何渡化眾生呢？
 
 同學們，我雖口稱『有我』，實際上卻是無我的存在。而在凡夫看來，則執著『有我』，以為只有我佛祖能渡化他們。這是錯誤的觀念。事實上，人人可成佛，迷則為凡夫，覺悟則成佛。佛與凡夫，本性是相同的。只要能了悟，就不是凡夫。化無所化，就是非我所化、非我所渡的意思。」`, 
-                note: `一切需自己改變壞習慣阿，佛祖說他講經一輩子，沒渡半個人，因為一切都是眾生自己願意改壞習慣的。阿彌陀佛。` 
-            },
-            { 
-                id: 26, 
-                title: '法身非相', 
-                dialogue: `佛祖說：「同學們，你們認為我如來可以用三十二相來觀想嗎？」
+        note: `一切需自己改變壞習慣阿，佛祖說他講經一輩子，沒渡半個人，因為一切都是眾生自己願意改壞習慣的。阿彌陀佛。` 
+    },
+    { 
+        id: 26, 
+        title: '法身非相', 
+        dialogue: `佛祖說：「同學們，你們認為我如來可以用三十二相來觀想嗎？」
 同學回答：「當然阿，您是可以三十二相來觀想阿。」
 
 佛祖說：「同學們尚未明白深義。轉輪聖王是天神，所以俱有很多相色身，而有這些相，也是為引導眾生而幻化三十二相。而如來，每個眾生都俱足，如來是心的清淨法身，如來怎麼會是有相的呢？如果如來有相，那還是執著我、人、眾生、壽者阿。
 
 同學們，你們一定要切記，你們如果只見我的形相外表，或是只執著我的聲教，那你們只學到皮面而已，無法入我髓心，絕對無法見到如來心髓。要切記：法身非相。」`, 
-                note: `如果一個修行者，只是執相拜佛，雖有福德，卻是無法契入佛心的。以上師兄釋義。阿彌陀佛。` 
-            },
-            { 
-                id: 27, 
-                title: '無斷無滅', 
-                dialogue: `張三豐說：「無忌，我一再的說無相法，只是勸人離相，不要被相束縛，但我不是教大家滅相。
+        note: `如果一個修行者，只是執相拜佛，雖有福德，卻是無法契入佛心的。以上師兄釋義。阿彌陀佛。` 
+    },
+    { 
+        id: 27, 
+        title: '無斷無滅', 
+        dialogue: `張三豐說：「無忌，我一再的說無相法，只是勸人離相，不要被相束縛，但我不是教大家滅相。
 
 師父希望你好好記住，在這世間，是有相的世界，人必須吃喝拉撒睡，這是有相的。但師父教你的離相，是心要離塵相，不要太過貪欲貪求，知足常樂，不要變成慾望的奴隸。
 
 無忌，千萬不可想證得無上菩提法，而執著一切皆空，而誤以為能不修福德，而可直證菩提心法。為什麼呢？因為菩提心法必須從一切善法修起，佈施、持戒、忍辱為基本功，修出慈悲喜捨心，菩提心法才能出神入化，融於法界。
 
 無忌啊，切記，心是離相不是滅相，是不執著法而不是滅法。」`, 
-                note: `以上師兄這樣解釋大家是否比較有興趣看？阿彌陀佛。` 
-            },
-            { 
-                id: 28, 
-                title: '不受不貪', 
-                dialogue: `佛祖說：「若有人行佈施，但執著名相，或比較多少，或計較他人佈施多少，雖有福德但卻有限。若有人行佈施，能不執著名相，知一切法無我，只知發願行善，那後者的福德功德要勝過前者太多了。
+        note: `以上師兄這樣解釋大家是否比較有興趣看？阿彌陀佛。` 
+    },
+    { 
+        id: 28, 
+        title: '不受不貪', 
+        dialogue: `佛祖說：「若有人行佈施，但執著名相，或比較多少，或計較他人佈施多少，雖有福德但卻有限。若有人行佈施，能不執著名相，知一切法無我，只知發願行善，那後者的福德功德要勝過前者太多了。
 
 同學們，因為行菩薩道學佛，要學習離相，不可貪求功德，也就是所有菩薩因行善不受福德的緣故，才能成就菩薩道。」
 
 學生問：「老師，因果受與施，是理所當然，為何要說菩薩不受福德呢？」
 
 佛祖回答：「同學們，凡夫永遠不滿足稱為『貪』。若修行或行善佈施，貪求福德或貪求果位，或貪求神通、貪求成仙涅槃，都稱為『貪』，那還是凡夫之境啊。所以我才說菩薩不受福德，不貪功德，這才是真菩薩。」`, 
-                note: `以上釋明法翻譯。阿彌陀佛。` 
-            },
-            { 
-                id: 29, 
-                title: '威儀寂靜', 
-                dialogue: `佛祖說：「同學們，金剛經講到二十九課了，如果還有同學認為我如來的行住坐臥都是萬分莊嚴，威儀萬千，那就等於還是不了解我所說的一切經文心法。
+        note: `以上釋明法翻譯。阿彌陀佛。` 
+    },
+    { 
+        id: 29, 
+        title: '威儀寂靜', 
+        dialogue: `佛祖說：「同學們，金剛經講到二十九課了，如果還有同學認為我如來的行住坐臥都是萬分莊嚴，威儀萬千，那就等於還是不了解我所說的一切經文心法。
 
 為什麼呢？因為再莊嚴都是外相，不能因為威儀莊嚴就是佛，沒有威儀莊嚴就不是佛。我在金剛經所講的都是心性修持，心是如來，如何威儀莊嚴自己的心？這課《威儀寂靜》中，寂靜就是讓心寂靜。如何寂靜？心不要被慾望牽著走稱為寂靜，順境不高傲，逆境不嗔恨，稱為寂靜。」`, 
-                note: `《威儀寂靜》簡單說就是莊嚴心性。以上釋明法翻譯。阿彌陀佛。` 
-            },
-            { 
-                id: 30, 
-                title: '一合理相', 
-                dialogue: `佛祖說：「這世間充滿一合理相。大至整個宇宙的星球運轉，小至一隻動物的細胞組成，再看看現在的科技發達，汽車的組成，手機的多功能，任何物質的組成，看來都是一合理相。
+        note: `《威儀寂靜》簡單說就是莊嚴心性。以上釋明法翻譯。阿彌陀佛。` 
+    },
+    { 
+        id: 30, 
+        title: '一合理相', 
+        dialogue: `佛祖說：「這世間充滿一合理相。大至整個宇宙的星球運轉，小至一隻動物的細胞組成，再看看現在的科技發達，汽車的組成，手機的多功能，任何物質的組成，看來都是一合理相。
 
 雖然方便人類使用，但我所講的是『心性的一合理相』。一般的人不明白心性，心被塵慾迷惑著，依戀眼前幻境，眼、耳、鼻、舌、身、意隨著各相奔走，而迷失本性。
 
 雖然這些話不適用在當今社會，但至少要懂得知足常樂，因為真的，生不帶來死不帶去，萬般帶不走，只有業隨身。」`, 
-                note: `《一合理相》就是抓住念頭，不要妄念紛飛，而讓身與口造了業。以上釋明法淺譯。阿彌陀佛。` 
-            },
-            { 
-                id: 31, 
-                title: '知見不生', 
-                dialogue: `佛祖說：「同學們，老師在金剛經中一直強調『離四相』——我相、人相、眾生相、壽者相。如果有人說金剛經著重於我見、人見、眾生見、壽者見，這些話，同學們，你認為這個人是否了解我所說的法義呢？」
+        note: `《一合理相》就是抓住念頭，不要妄念紛飛，而讓身與口造了業。以上釋明法淺譯。阿彌陀佛。` 
+    },
+    { 
+        id: 31, 
+        title: '知見不生', 
+        dialogue: `佛祖說：「同學們，老師在金剛經中一直強調『離四相』——我相、人相、眾生相、壽者相。如果有人說金剛經著重於我見、人見、眾生見、壽者見，這些話，同學們，你認為這個人是否了解我所說的法義呢？」
 
 同學回答：「老師是為了讓民眾了解心性修持的要義，才把我執分成我相、人相、眾生相、壽者相；才把塵事，分成色、聲、香、味、觸、法。只是為了方便說明，而假借這些名詞，真正心法，並非文字可傳達。」
 
 佛祖說：「很好。一切法本是虛空，既非有法可尋。法無定法，因教導眾生層度不同而無一定的法，而一切法只為輔導眾生而顯現，實際上並無法，所以才統稱『法相』。」`, 
-                note: `第三十一課《知見不生》就是當你知道這一切，不要有任何見解產生，這才是融入虛空法界。以上釋明法淺譯。阿彌陀佛。` 
-            },
-            { 
-                id: 32, 
-                title: '應化非真', 
-                dialogue: `佛祖說：「無論是應身或化身，全是法身的大用，為教導眾生而變化。而法身也無一定的相容，只是假一個化身方便教導，以如如身說如如法而已。
+        note: `第三十一課《知見不生》就是當你知道這一切，不要有任何見解產生，這才是融入虛空法界。以上釋明法淺譯。阿彌陀佛。` 
+    },
+    { 
+        id: 32, 
+        title: '應化非真', 
+        dialogue: `佛祖說：「無論是應身或化身，全是法身的大用，為教導眾生而變化。而法身也無一定的相容，只是假一個化身方便教導，以如如身說如如法而已。
 
 但後代的世人，若能以此金剛經說法，調伏剛強眾生的心性，隨之轉念，慈悲喜捨廣度眾生，這無量功德比用世界七寶佈施的功德來的大。
 
 財佈施是救急，法佈施是救根、救本、救心。法無定法，是對修菩薩道弟子而說，因怕弟子深入法執的障礙深淵。但對一般還未入修的民眾，一定要說一定的善法來教導，才不會偏差，誤入岐途，但最終還是『先以欲鉤牽，後令入佛智』。」`, 
-                note: `阿彌陀佛。` 
-            }
-        ];
+        note: `阿彌陀佛。` 
+    }
+];
 
 const ZONES=[{n:'第一區塊',c:0xb91c1c},{n:'第二區塊',c:0xd97706},{n:'第三區塊',c:0x0f766e},{n:'第四區塊',c:0x4f46e5}];
 const per=Math.ceil(lessons.length/4);
@@ -496,9 +599,9 @@ const $=id=>document.getElementById(id);
 const dark=matchMedia('(prefers-color-scheme: dark)').matches;
 const W=()=>$('cv').clientWidth,H=()=>$('cv').clientHeight;
 
-// ---- scene ----
+// ---- 場景初始化 ----
 const scene=new THREE.Scene();
-const skyTop=dark?0x14161f:0xf6ead0;
+const skyTop=dark?0x1c1a17:0xfdfbf7; 
 scene.background=new THREE.Color(skyTop);
 scene.fog=new THREE.Fog(skyTop,60,170);
 const cam=new THREE.PerspectiveCamera(50,1,.1,400);
@@ -506,12 +609,15 @@ const ren=new THREE.WebGLRenderer({antialias:true});
 ren.setPixelRatio(Math.min(devicePixelRatio,2));
 ren.shadowMap.enabled=true;
 $('cv').appendChild(ren.domElement);
-scene.add(new THREE.HemisphereLight(0xfff3da,0x6b5a3a,dark?.55:.9));
-const sun=new THREE.DirectionalLight(0xffe2b0,dark?.5:.9);
+
+const hemiLight = new THREE.HemisphereLight(0xfff3da,0x6b5a3a,dark?.45:.8);
+scene.add(hemiLight);
+const sun=new THREE.DirectionalLight(0xffe2b0,dark?.45:.8);
 sun.position.set(40,60,20);sun.castShadow=true;
 sun.shadow.mapSize.set(1024,1024);
 Object.assign(sun.shadow.camera,{left:-60,right:60,top:60,bottom:-60,far:200});
 scene.add(sun);
+
 const ground=new THREE.Mesh(new THREE.CircleGeometry(62,64),new THREE.MeshLambertMaterial({color:dark?0x2c2a22:0xe9dcb8}));
 ground.rotation.x=-Math.PI/2;ground.receiveShadow=true;scene.add(ground);
 for(const r of[8,26,48]){const g=new THREE.Mesh(new THREE.RingGeometry(r,r+.12,96),new THREE.MeshBasicMaterial({color:0xb45309,transparent:true,opacity:.25}));g.rotation.x=-Math.PI/2;g.position.y=.02;scene.add(g)}
@@ -521,13 +627,13 @@ function label(txt,sub,col){
  x.fillStyle='rgba(255,251,235,.94)';x.strokeStyle=col;x.lineWidth=5;
  x.beginPath();x.roundRect?x.roundRect(4,4,312,102,18):x.rect(4,4,312,102);x.fill();x.stroke();
  x.fillStyle=col;x.font='600 24px "Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif';x.textAlign='center';x.fillText(sub,160,38);
- x.fillStyle='#2d2d2d';x.font='700 36px "Noto Serif TC","PingFang TC","Microsoft JhengHei",serif';x.fillText(txt.length>7?txt.slice(0,7)+'…':txt,160,84);
+ x.fillStyle='#2c2925';x.font='700 36px "Noto Serif TC","PingFang TC","Microsoft JhengHei",serif';x.fillText(txt.length>7?txt.slice(0,7)+'…':txt,160,84);
  const t=new THREE.CanvasTexture(c);const s=new THREE.Sprite(new THREE.SpriteMaterial({map:t,depthTest:false,transparent:true}));
- s.scale.set(6.4,2.2,1);s.renderOrder=10;return s}
+ s.scale.set(6.4,2.2,1);s.renderOrder=10;return s
+}
 const hit=[];
 function tag(g,type,idx){g.traverse(m=>{if(m.isMesh){m.userData={type,idx};}});Object.assign(g.userData,{type,idx});hit.push(g)}
 
-// spiral path of lessons
 const SP=lessons.map((_,i)=>{const th=i*.4+.3,r=16+i*.75;return new THREE.Vector3(Math.cos(th)*r,0,Math.sin(th)*r)});
 const pathPts=[new THREE.Vector3(0,0,10),...SP];
 const curve=new THREE.CatmullRomCurve3(pathPts);
@@ -537,48 +643,28 @@ tube.scale.y=.25;scene.add(tube);
 const bld=[];
 lessons.forEach((L,i)=>{
  const z=ZONES[zoneOf(i)],g=new THREE.Group();
- 
- // 1. 雙層精緻底座 (增加階梯感與穩重感)
  const base1=new THREE.Mesh(new THREE.CylinderGeometry(2.4, 2.6, 0.25, 16),new THREE.MeshLambertMaterial({color:0x4a3a22}));base1.position.y=0.125;
  const base2=new THREE.Mesh(new THREE.CylinderGeometry(2.1, 2.3, 0.25, 16),new THREE.MeshLambertMaterial({color:0x5b4a32}));base2.position.y=0.375;
- 
- // 2. 主體與四根紅色大柱子 (增加東方建築細節)
  const body=new THREE.Mesh(new THREE.CylinderGeometry(1.4, 1.4, 1.5, 16),new THREE.MeshLambertMaterial({color:z.c}));body.position.y=1.25;
- const pMat=new THREE.MeshLambertMaterial({color:0x8B0000}); // 傳統紅柱
+ const pMat=new THREE.MeshLambertMaterial({color:0x8B0000}); 
  for(let j=0; j<4; j++){
-     const a = (j * Math.PI) / 2 + Math.PI/4; // 分布在四個角落
+     const a = (j * Math.PI) / 2 + Math.PI/4;
      const pillar = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 1.6, 8), pMat);
      pillar.position.set(Math.cos(a)*1.5, 1.3, Math.sin(a)*1.5);
      g.add(pillar);
  }
- 
- // 3. 豪華雙層 Q 版大屋頂 (像香菇般圓潤可愛，但具備重檐特徵)
- const roofMat = new THREE.MeshLambertMaterial({color:0x2d2d2d});
+ const roofMat = new THREE.MeshLambertMaterial({color:0x2c2925});
  const roof1=new THREE.Mesh(new THREE.ConeGeometry(2.9, 1.2, 16),roofMat);roof1.position.y=2.6;
  const roof2=new THREE.Mesh(new THREE.ConeGeometry(2.0, 1.0, 16),roofMat);roof2.position.y=3.5;
- 
- // 4. 精緻塔尖裝飾 (立體金頂)
  const tipBase=new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.3, 12),new THREE.MeshLambertMaterial({color:0xd97706}));tipBase.position.y=4.15;
  const tip=new THREE.Mesh(new THREE.SphereGeometry(0.45, 16, 12),new THREE.MeshLambertMaterial({color:0xfbbf24, emissive:0x331100}));tip.position.y=4.5;
- 
  g.add(base1, base2, body, roof1, roof2, tipBase, tip);
  g.traverse(m=>{if(m.isMesh)m.castShadow=true});
  g.position.copy(SP[i]);g.rotation.y=-i*.4;
- 
- // 調整招牌標籤高度
  const lb=label(L.title,`第 ${L.id} 課`,'#'+z.c.toString(16).padStart(6,'0'));lb.position.y=6.8;
- g.add(lb);
- g.userData.body=body;tag(g,'lesson',i);scene.add(g);bld.push(g)
+ g.add(lb);g.userData.body=body;tag(g,'lesson',i);scene.add(g);bld.push(g)
 });
 
-// zone banners (lesson blocks)
-ZONES.forEach((z,k)=>{
- const a=k*per,b=Math.min(lessons.length-1,a+per-1);
- const mid=SP[Math.min(lessons.length-1,a+Math.floor((b-a)/2))];
- const s=label(`第${a+1}–${b+1}課`,z.n,'#'+z.c.toString(16).padStart(6,'0'));
- s.scale.set(8,2.75,1);s.position.set(mid.x*1.0,12.5,mid.z*1.0);scene.add(s)});
-
-// periods: 5 pillars at centre
 const pil=[];
 periodsData.data.forEach((v,i)=>{
  const a=i/5*Math.PI*2-Math.PI/2,g=new THREE.Group();
@@ -588,7 +674,6 @@ periodsData.data.forEach((v,i)=>{
  const lb=label(periodsData.details[i].time,`第${'一二三四五'[i]}時`,'#8B0000');lb.position.y=h+1.6;lb.scale.set(4.2,1.45,1);g.add(lb);
  g.position.set(Math.cos(a)*3.6,0,Math.sin(a)*3.6);g.userData.body=m;tag(g,'period',i);scene.add(g);pil.push(g)});
 
-// glossary gems
 const gems=[];
 glossaryTerms.forEach((t,i)=>{
  const a=i/glossaryTerms.length*Math.PI*2,g=new THREE.Group();
@@ -597,76 +682,66 @@ glossaryTerms.forEach((t,i)=>{
  const lb=label(t.term.replace(/\s*\(.*\)/,''),'名詞','#0f766e');lb.position.y=4;lb.scale.set(4,1.4,1);g.add(lb);
  g.position.set(Math.cos(a)*9.2,0,Math.sin(a)*9.2);g.userData.body=m;tag(g,'gloss',i);scene.add(g);gems.push(g)});
 
-// trees/lanterns for ambience
+// 效能優化 (使用 InstancedMesh)
+const treeCount = 70;
+const trunkGeo = new THREE.CylinderGeometry(.15, .22, 1.6, 6);
+const trunkMat = new THREE.MeshLambertMaterial({color:0x6b4a2b});
+const trunkInst = new THREE.InstancedMesh(trunkGeo, trunkMat, treeCount);
+trunkInst.castShadow = true; trunkInst.receiveShadow = true;
+
+const leafGeo = new THREE.ConeGeometry(1.1, 3, 7);
+const leafMat = new THREE.MeshLambertMaterial({color:dark?0x2f5a3a:0x5f8f4c});
+const leafInst = new THREE.InstancedMesh(leafGeo, leafMat, treeCount);
+leafInst.castShadow = true; leafInst.receiveShadow = true;
+
+const dummy = new THREE.Object3D();
 const rnd=(()=>{let s=7;return()=>(s=s*16807%2147483647)/2147483647})();
-for(let i=0;i<70;i++){
- const a=rnd()*Math.PI*2,r=14+rnd()*46,p=new THREE.Vector3(Math.cos(a)*r,0,Math.sin(a)*r);
- if(SP.some(q=>q.distanceTo(p)<5))continue;
- const t=new THREE.Group(),s=.7+rnd()*.8;
- const tr=new THREE.Mesh(new THREE.CylinderGeometry(.15*s,.22*s,1.6*s,6),new THREE.MeshLambertMaterial({color:0x6b4a2b}));tr.position.y=.8*s;
- const lv=new THREE.Mesh(new THREE.ConeGeometry(1.1*s,3*s,7),new THREE.MeshLambertMaterial({color:dark?0x2f5a3a:0x5f8f4c}));lv.position.y=2.9*s;
- t.add(tr,lv);t.position.copy(p);t.traverse(m=>{if(m.isMesh)m.castShadow=true});scene.add(t)}
+let addedTrees = 0;
+for(let i=0; i<300 && addedTrees<treeCount; i++){
+ const a=rnd()*Math.PI*2, r=14+rnd()*46;
+ const p=new THREE.Vector3(Math.cos(a)*r, 0, Math.sin(a)*r);
+ if(SP.some(q=>q.distanceTo(p)<5)) continue; 
+ 
+ const s = .7+rnd()*.8;
+ dummy.position.copy(p);
+ dummy.scale.set(s, s, s);
+ 
+ dummy.position.y = .8*s;
+ dummy.updateMatrix();
+ trunkInst.setMatrixAt(addedTrees, dummy.matrix);
+ 
+ dummy.position.y = 2.9*s;
+ dummy.updateMatrix();
+ leafInst.setMatrixAt(addedTrees, dummy.matrix);
+ addedTrees++;
+}
+trunkInst.count = addedTrees; leafInst.count = addedTrees;
+scene.add(trunkInst, leafInst);
 
-// monk - Q版【精緻】可愛小僧侶
+// 僧侶 (主角)
 const monk=new THREE.Group();
-
-// 1. 身體細節：多層次袈裟、黃色內襯與立體腰帶
 const robe=new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.6, 0.8, 16),new THREE.MeshLambertMaterial({color:0xea8a1b}));robe.position.y=0.4;
 const innerRobe=new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.3, 0.2, 16),new THREE.MeshLambertMaterial({color:0xffd166}));innerRobe.position.y=0.8;
 const sash=new THREE.Mesh(new THREE.TorusGeometry(0.42, 0.06, 12, 16),new THREE.MeshLambertMaterial({color:0x8B0000}));sash.position.y=0.5; sash.rotation.x = Math.PI/2;
-
-// 2. 超大圓潤頭部與精緻五官 (水汪汪大眼與害羞粉紅腮紅)
 const head=new THREE.Mesh(new THREE.SphereGeometry(0.65, 32, 24),new THREE.MeshLambertMaterial({color:0xffe4c4}));head.position.y=1.35;
-
-const eyeGeom = new THREE.SphereGeometry(0.08, 16, 16);
-const eyeMat = new THREE.MeshLambertMaterial({color:0x1a1a1a}); // 眼睛
-const leftEye = new THREE.Mesh(eyeGeom, eyeMat); leftEye.position.set(-0.25, 1.45, 0.58);
-const rightEye = new THREE.Mesh(eyeGeom, eyeMat); rightEye.position.set(0.25, 1.45, 0.58);
-
-// 壓扁的橢圓形腮紅
-const blushGeom = new THREE.SphereGeometry(0.1, 16, 16);
+const eyeMat = new THREE.MeshLambertMaterial({color:0x1a1a1a});
+const leftEye = new THREE.Mesh(new THREE.SphereGeometry(0.08, 16, 16), eyeMat); leftEye.position.set(-0.25, 1.45, 0.58);
+const rightEye = new THREE.Mesh(new THREE.SphereGeometry(0.08, 16, 16), eyeMat); rightEye.position.set(0.25, 1.45, 0.58);
 const blushMat = new THREE.MeshBasicMaterial({color:0xff8888, transparent:true, opacity:0.5});
-const leftBlush = new THREE.Mesh(blushGeom, blushMat); leftBlush.position.set(-0.4, 1.25, 0.53); leftBlush.scale.set(1.5, 0.8, 0.2);
-const rightBlush = new THREE.Mesh(blushGeom, blushMat); rightBlush.position.set(0.4, 1.25, 0.53); rightBlush.scale.set(1.5, 0.8, 0.2);
-
-// 3. 手臂與小圓手
-const armMat = new THREE.MeshLambertMaterial({color:0xea8a1b});
-const handMat = new THREE.MeshLambertMaterial({color:0xffe4c4});
-const leftArm = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.06, 0.4, 8), armMat);
-leftArm.position.set(-0.45, 0.6, 0.15); leftArm.rotation.z = Math.PI/4; leftArm.rotation.x = -Math.PI/6;
-const leftHand = new THREE.Mesh(new THREE.SphereGeometry(0.1, 12, 12), handMat);
-leftHand.position.set(-0.6, 0.45, 0.3);
-
-const rightArm = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.06, 0.4, 8), armMat);
-rightArm.position.set(0.45, 0.6, 0.15); rightArm.rotation.z = -Math.PI/4; rightArm.rotation.x = -Math.PI/6;
-const rightHand = new THREE.Mesh(new THREE.SphereGeometry(0.1, 12, 12), handMat);
-rightHand.position.set(0.6, 0.45, 0.3);
-
-// 4. 精緻配件：一把迷你的 Q 版黃金錫杖 (法杖)
-const staffGroup = new THREE.Group();
-const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 1.8, 8), new THREE.MeshLambertMaterial({color:0x4a3320}));
-pole.position.y = 0.9;
-const ringTop = new THREE.Mesh(new THREE.TorusGeometry(0.15, 0.025, 8, 16), new THREE.MeshLambertMaterial({color:0xffd700, emissive:0x443300}));
-ringTop.position.y = 1.8;
-staffGroup.add(pole, ringTop);
-staffGroup.position.set(0.7, 0, 0.35); // 放置在右手邊
-
-// 5. 佛光環加上自發光質感
+const leftBlush = new THREE.Mesh(new THREE.SphereGeometry(0.1, 16, 16), blushMat); leftBlush.position.set(-0.4, 1.25, 0.53); leftBlush.scale.set(1.5, 0.8, 0.2);
+const rightBlush = new THREE.Mesh(new THREE.SphereGeometry(0.1, 16, 16), blushMat); rightBlush.position.set(0.4, 1.25, 0.53); rightBlush.scale.set(1.5, 0.8, 0.2);
 const halo=new THREE.Mesh(new THREE.TorusGeometry(0.85, 0.05, 16, 32),new THREE.MeshLambertMaterial({color:0xfbbf24, emissive:0x664400}));
 halo.position.y=2.15; halo.rotation.x=Math.PI/2;
-
-monk.add(robe, innerRobe, sash, head, leftEye, rightEye, leftBlush, rightBlush, leftArm, rightArm, leftHand, rightHand, staffGroup, halo);
+monk.add(robe, innerRobe, sash, head, leftEye, rightEye, leftBlush, rightBlush, halo);
 monk.traverse(m=>{if(m.isMesh)m.castShadow=true});
-monk.scale.setScalar(1.3); 
-monk.position.set(0,0,10);scene.add(monk);
+monk.scale.setScalar(1.3); monk.position.set(0,0,10);scene.add(monk);
 
-// ---- camera orbit ----
 let az=.7,el=.95,dist=W()/H()<1?52:40;const tgt=new THREE.Vector3(0,2,6),goal=new THREE.Vector3();
 function resize(){ren.setSize(W(),H());cam.aspect=W()/H();cam.updateProjectionMatrix()}
 addEventListener('resize',resize);resize();
-const ptr=new Map();let down=null,moved=0,pd=0;
+const ptr=new Map();let moved=0,pd=0;
 const el_=ren.domElement;
-el_.addEventListener('pointerdown',e=>{el_.setPointerCapture(e.pointerId);ptr.set(e.pointerId,[e.clientX,e.clientY]);down=[e.clientX,e.clientY];moved=0;if(ptr.size==2){const [a,b]=[...ptr.values()];pd=Math.hypot(a[0]-b[0],a[1]-b[1])}});
+el_.addEventListener('pointerdown',e=>{el_.setPointerCapture(e.pointerId);ptr.set(e.pointerId,[e.clientX,e.clientY]);moved=0;if(ptr.size==2){const [a,b]=[...ptr.values()];pd=Math.hypot(a[0]-b[0],a[1]-b[1])}});
 el_.addEventListener('pointermove',e=>{
  if(!ptr.has(e.pointerId))return;const o=ptr.get(e.pointerId);const dx=e.clientX-o[0],dy=e.clientY-o[1];ptr.set(e.pointerId,[e.clientX,e.clientY]);
  moved+=Math.abs(dx)+Math.abs(dy);
@@ -683,66 +758,148 @@ function pick(e){
  const h=ray.intersectObjects(hit,true).find(x=>x.object.userData&&x.object.userData.type);
  if(h)goTo(h.object.userData.type,h.object.userData.idx)}
 
-// ---- guided walking ----
 let route=[],target=null,cur={type:'start',idx:-1},speed=11,walkT=0,selMesh=null;
-function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2200)}
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2500)}
 function objPos(type,idx){return(type==='lesson'?bld:type==='period'?pil:gems)[idx].position}
-function stopPos(type,idx){ // stand in front of object, toward the centre
- const p=objPos(type,idx).clone();const d=p.clone().setLength(type==='lesson'?3.8:3);return p.sub(d)}
+function stopPos(type,idx){const p=objPos(type,idx).clone();const d=p.clone().setLength(type==='lesson'?3.8:3);return p.sub(d)}
 function curSpiral(){return cur.type==='lesson'?cur.idx:-1}
+
 function goTo(type,idx){
  closePanel();setNav(type,idx);
+ try { localStorage.setItem('diamond_sutra_progress', JSON.stringify({type, idx})); } catch(e){}
+
+ // 【修復】：如果已經在該位置，直接原地重開面板，不重新計算路徑
+ if(cur.type === type && cur.idx === idx) {
+     target={type,idx}; 
+     arrive(); 
+     return;
+ }
+
  const end=stopPos(type,idx);route=[];
  const a=curSpiral();
  if(type==='lesson'){
   const from=a<0?-1:a;
-  if(from<0){route.push(new THREE.Vector3(0,0,10));for(let i=0;i<idx;i++)route.push(SP[i].clone().setLength(SP[i].length()-3.8))}
-  else{const st=idx>=from?1:-1;for(let i=from+st;i!==idx;i+=st)route.push(SP[i].clone().setLength(SP[i].length()-3.8))}
+  if(from<0){
+      route.push(new THREE.Vector3(0,0,10));
+      for(let i=0;i<idx;i++)route.push(SP[i].clone().setLength(SP[i].length()-3.8));
+  }
+  else{
+      if (from !== idx) {
+          const st=idx>from?1:-1;
+          for(let i=from+st;i!==idx;i+=st)route.push(SP[i].clone().setLength(SP[i].length()-3.8));
+      }
+  }
  }else if(a>=0){for(let i=a-1;i>=0;i--)route.push(SP[i].clone().setLength(SP[i].length()-3.8));route.push(new THREE.Vector3(0,0,10))}
  route.push(end);target={type,idx};
  const d=type==='lesson'?lessons[idx].title:type==='period'?periodsData.details[idx].title:glossaryTerms[idx].term;
- toast('法師帶路前往：'+d)}
+ toast('法師帶路前往：'+d)
+}
+
 function arrive(){
  cur={...target};monk.lookAt(objPos(target.type,target.idx).x,0,objPos(target.type,target.idx).z);
  selMesh=(target.type==='lesson'?bld:target.type==='period'?pil:gems)[target.idx];openPanel(target.type,target.idx)}
 
-// ---- panel ----
+let synth = window.speechSynthesis;
+let isSpeaking = false;
+
+function cleanHTML(htmlStr) {
+    let tmp = document.createElement("DIV");
+    tmp.innerHTML = htmlStr;
+    return tmp.textContent || tmp.innerText || "";
+}
+
+function toggleSpeech(text) {
+    if(isSpeaking) {
+        synth.cancel();
+        isSpeaking = false;
+        const btn = $('btnSpeak');
+        if(btn) btn.innerHTML = '🔊 語音導讀';
+        return;
+    }
+    synth.cancel();
+    const utterance = new SpeechSynthesisUtterance(cleanHTML(text));
+    utterance.lang = 'zh-TW'; utterance.rate = 0.95; 
+    utterance.onend = () => { isSpeaking = false; const btn = $('btnSpeak'); if(btn) btn.innerHTML = '🔊 語音導讀'; };
+    synth.speak(utterance);
+    isSpeaking = true;
+    $('btnSpeak').innerHTML = '⏹ 停止導讀';
+}
+
 function openPanel(type,i){
- let h='';
- if(type==='lesson'){const L=lessons[i];
+ let h='', speakText = '';
+ if(type==='lesson'){
+  const L=lessons[i];
+  speakText = `第${L.id}課，${L.title}。經文對話：${L.dialogue}。師兄註解：${L.note}`;
   h=`<h2>第 ${L.id} 課　${L.title}</h2><div class="tag">${ZONES[zoneOf(i)].n}・經文白話對話</div>
   <h3>經文對話</h3><div class="txt">${L.dialogue}</div>
   <h3>師兄註解</h3><div class="txt note">${L.note}</div>${L.extra?`<div class="extra">${L.extra}</div>`:''}
-  <div class="pn"><button id="pv" ${i==0?'disabled':''}>◀ 上一課</button><button id="nx" class="pri" ${i==lessons.length-1?'disabled':''}>下一課 ▶</button></div>`}
- else if(type==='period'){const d=periodsData.details[i];
+  <div class="pn">
+    <button id="btnSpeak" class="audio-btn">🔊 語音導讀</button>
+    <button id="pv" ${i==0?'disabled':''}>◀ 上一課</button><button id="nx" class="pri" ${i==lessons.length-1?'disabled':''}>下一課 ▶</button>
+  </div>`
+ }
+ else if(type==='period'){
+  const d=periodsData.details[i];
+  speakText = `${d.title}。${d.desc}`;
   h=`<h2>${d.title}</h2><div class="tag">釋迦牟尼佛說法時程・⏱ ${d.time}</div><div class="txt">${d.desc}</div>
-  <div class="pn"><button id="pv" ${i==0?'disabled':''}>◀ 上一時</button><button id="nx" class="pri" ${i==4?'disabled':''}>下一時 ▶</button></div>`}
- else{const t=glossaryTerms[i];
+  <div class="pn">
+    <button id="btnSpeak" class="audio-btn">🔊 語音導讀</button>
+    <button id="pv" ${i==0?'disabled':''}>◀ 上一時</button><button id="nx" class="pri" ${i==4?'disabled':''}>下一時 ▶</button>
+  </div>`
+ }
+ else{
+  const t=glossaryTerms[i];
+  speakText = `名詞解釋：${t.term}。${t.def}`;
   h=`<h2>${t.term}</h2><div class="tag">核心概念</div><div class="extra" style="margin:0"><div>${t.def}</div></div>
-  <div class="pn"><button id="pv" ${i==0?'disabled':''}>◀ 上一個</button><button id="nx" class="pri" ${i==glossaryTerms.length-1?'disabled':''}>下一個 ▶</button></div>`}
+  <div class="pn">
+    <button id="btnSpeak" class="audio-btn">🔊 語音導讀</button>
+    <button id="pv" ${i==0?'disabled':''}>◀ 上一個</button><button id="nx" class="pri" ${i==glossaryTerms.length-1?'disabled':''}>下一個 ▶</button>
+  </div>`
+ }
  $('pc').innerHTML=h;$('panel').classList.remove('hide');$('panel').scrollTop=0;
- $('pv').onclick=()=>goTo(type,i-1);$('nx').onclick=()=>goTo(type,i+1)}
-function closePanel(){$('panel').classList.add('hide')}
+ $('pv').onclick=()=>goTo(type,i-1);$('nx').onclick=()=>goTo(type,i+1);
+ $('btnSpeak').onclick = () => toggleSpeech(speakText);
+}
+
+function closePanel(){
+ $('panel').classList.add('hide');
+ if(isSpeaking) toggleSpeech(''); 
+}
 $('close').onclick=closePanel;
 
-// ---- nav ----
 const items=[['背景','period',0],...ZONES.map((z,k)=>[`${k*per+1}–${Math.min(lessons.length,(k+1)*per)}課`,'lesson',k*per]),['名詞','gloss',0]];
 items.forEach(([t,ty,ix],n)=>{const b=document.createElement('button');b.className='chip';b.textContent=t;b.onclick=()=>goTo(ty,ix);b.dataset.n=n;$('nav').appendChild(b)});
 lessons.forEach((L,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`第${L.id}課 ${L.title}`;$('pick').appendChild(o)});
 $('pick').onchange=e=>goTo('lesson',+e.target.value);
+
 function setNav(type,idx){
  const n=type==='period'?0:type==='gloss'?5:1+zoneOf(idx);
  [...$('nav').children].forEach(b=>b.classList.toggle('on',+b.dataset.n===n));
- if(type==='lesson')$('pick').value=idx}
+ if(type==='lesson')$('pick').value=idx;
+}
 
-// ---- loop ----
-const clock=new THREE.Clock();let sel=1;
+$('search').addEventListener('keydown', (e) => {
+    if(e.key === 'Enter') {
+        const query = e.target.value.trim().toLowerCase();
+        if(!query) return;
+        
+        let matchIdx = lessons.findIndex(l => l.title.includes(query) || l.dialogue.includes(query) || l.note.includes(query) || (l.extra && l.extra.includes(query)));
+        if(matchIdx >= 0) { e.target.blur(); return goTo('lesson', matchIdx); }
+        
+        matchIdx = glossaryTerms.findIndex(t => t.term.includes(query) || t.def.includes(query));
+        if(matchIdx >= 0) { e.target.blur(); return goTo('gloss', matchIdx); }
+        
+        toast(`找不到包含「${query}」的內容`);
+    }
+});
+
+const clock=new THREE.Clock();
 function tick(){
  const dt=Math.min(clock.getDelta(),.05),t=clock.elapsedTime;
  if(route.length){
-  const p=route[0],d=p.clone().sub(monk.position);d.y=0;const L=d.length();
-  if(L<.2){monk.position.x=p.x;monk.position.z=p.z;route.shift();if(!route.length)arrive()}
-  else{monk.position.addScaledVector(d.normalize(),Math.min(L,speed*dt));monk.rotation.y=Math.atan2(d.x,d.z);walkT+=dt*12;monk.position.y=Math.abs(Math.sin(walkT))*.25}
+  const p=route[0],d=p.clone().sub(monk.position);d.y=0;const MathL=d.length();
+  if(MathL<.2){monk.position.x=p.x;monk.position.z=p.z;route.shift();if(!route.length)arrive()}
+  else{monk.position.addScaledVector(d.normalize(),Math.min(MathL,speed*dt));monk.rotation.y=Math.atan2(d.x,d.z);walkT+=dt*12;monk.position.y=Math.abs(Math.sin(walkT))*.25}
  }else monk.position.y=Math.sin(t*2)*.05;
  halo.rotation.z=t*2;
  gems.forEach((g,i)=>{g.userData.body.rotation.y=t+i;g.userData.body.position.y=2+Math.sin(t*1.5+i)*.25});
@@ -750,8 +907,22 @@ function tick(){
  goal.copy(monk.position);goal.y=2;tgt.lerp(goal,.08);
  cam.position.set(tgt.x+Math.sin(az)*Math.cos(el)*dist,tgt.y+Math.sin(el)*dist,tgt.z+Math.cos(az)*Math.cos(el)*dist);
  cam.lookAt(tgt);ren.render(scene,cam);requestAnimationFrame(tick)}
-$('load').style.opacity=0;tick();setTimeout(()=>$('load').remove(),600);
-setTimeout(()=>toast('歡迎！點選任一建築，法師會帶你前往'),900);
+
+$('load').style.opacity=0;tick();
+setTimeout(()=>$('load').remove(),600);
+
+setTimeout(() => {
+    let savedProgress = null;
+    try { savedProgress = localStorage.getItem('diamond_sutra_progress'); } catch(e){}
+    if (savedProgress) {
+        const {type, idx} = JSON.parse(savedProgress);
+        toast('歡迎回來！為您導航至上次學習進度...');
+        setTimeout(() => goTo(type, idx), 1000);
+    } else {
+        toast('歡迎！點選任一建築，法師會帶你前往');
+    }
+}, 900);
+
 </script>
 </body>
 </html>
