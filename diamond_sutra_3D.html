@@ -537,15 +537,39 @@ tube.scale.y=.25;scene.add(tube);
 const bld=[];
 lessons.forEach((L,i)=>{
  const z=ZONES[zoneOf(i)],g=new THREE.Group();
- const base=new THREE.Mesh(new THREE.CylinderGeometry(2.1,2.4,.6,8),new THREE.MeshLambertMaterial({color:0x5b4a32}));base.position.y=.3;
- const body=new THREE.Mesh(new THREE.CylinderGeometry(1.2,1.4,2.4,8),new THREE.MeshLambertMaterial({color:z.c}));body.position.y=1.8;
- const roof=new THREE.Mesh(new THREE.ConeGeometry(2.3,1.7,8),new THREE.MeshLambertMaterial({color:0x2d2d2d}));roof.position.y=3.85;
- const tip=new THREE.Mesh(new THREE.SphereGeometry(.28,12,8),new THREE.MeshBasicMaterial({color:0xfbbf24}));tip.position.y=4.9;
- g.add(base,body,roof,tip);
+ 
+ // 1. 雙層精緻底座 (增加階梯感與穩重感)
+ const base1=new THREE.Mesh(new THREE.CylinderGeometry(2.4, 2.6, 0.25, 16),new THREE.MeshLambertMaterial({color:0x4a3a22}));base1.position.y=0.125;
+ const base2=new THREE.Mesh(new THREE.CylinderGeometry(2.1, 2.3, 0.25, 16),new THREE.MeshLambertMaterial({color:0x5b4a32}));base2.position.y=0.375;
+ 
+ // 2. 主體與四根紅色大柱子 (增加東方建築細節)
+ const body=new THREE.Mesh(new THREE.CylinderGeometry(1.4, 1.4, 1.5, 16),new THREE.MeshLambertMaterial({color:z.c}));body.position.y=1.25;
+ const pMat=new THREE.MeshLambertMaterial({color:0x8B0000}); // 傳統紅柱
+ for(let j=0; j<4; j++){
+     const a = (j * Math.PI) / 2 + Math.PI/4; // 分布在四個角落
+     const pillar = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 1.6, 8), pMat);
+     pillar.position.set(Math.cos(a)*1.5, 1.3, Math.sin(a)*1.5);
+     g.add(pillar);
+ }
+ 
+ // 3. 豪華雙層 Q 版大屋頂 (像香菇般圓潤可愛，但具備重檐特徵)
+ const roofMat = new THREE.MeshLambertMaterial({color:0x2d2d2d});
+ const roof1=new THREE.Mesh(new THREE.ConeGeometry(2.9, 1.2, 16),roofMat);roof1.position.y=2.6;
+ const roof2=new THREE.Mesh(new THREE.ConeGeometry(2.0, 1.0, 16),roofMat);roof2.position.y=3.5;
+ 
+ // 4. 精緻塔尖裝飾 (立體金頂)
+ const tipBase=new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.3, 12),new THREE.MeshLambertMaterial({color:0xd97706}));tipBase.position.y=4.15;
+ const tip=new THREE.Mesh(new THREE.SphereGeometry(0.45, 16, 12),new THREE.MeshLambertMaterial({color:0xfbbf24, emissive:0x331100}));tip.position.y=4.5;
+ 
+ g.add(base1, base2, body, roof1, roof2, tipBase, tip);
  g.traverse(m=>{if(m.isMesh)m.castShadow=true});
  g.position.copy(SP[i]);g.rotation.y=-i*.4;
- const lb=label(L.title,`第 ${L.id} 課`,'#'+z.c.toString(16).padStart(6,'0'));lb.position.y=7.2;g.add(lb);
- g.userData.body=body;tag(g,'lesson',i);scene.add(g);bld.push(g)});
+ 
+ // 調整招牌標籤高度
+ const lb=label(L.title,`第 ${L.id} 課`,'#'+z.c.toString(16).padStart(6,'0'));lb.position.y=6.8;
+ g.add(lb);
+ g.userData.body=body;tag(g,'lesson',i);scene.add(g);bld.push(g)
+});
 
 // zone banners (lesson blocks)
 ZONES.forEach((z,k)=>{
@@ -583,14 +607,58 @@ for(let i=0;i<70;i++){
  const lv=new THREE.Mesh(new THREE.ConeGeometry(1.1*s,3*s,7),new THREE.MeshLambertMaterial({color:dark?0x2f5a3a:0x5f8f4c}));lv.position.y=2.9*s;
  t.add(tr,lv);t.position.copy(p);t.traverse(m=>{if(m.isMesh)m.castShadow=true});scene.add(t)}
 
-// monk
+// monk - Q版【精緻】可愛小僧侶
 const monk=new THREE.Group();
-const robe=new THREE.Mesh(new THREE.CylinderGeometry(.35,.7,1.7,12),new THREE.MeshLambertMaterial({color:0xea8a1b}));robe.position.y=.85;
-const sash=new THREE.Mesh(new THREE.CylinderGeometry(.5,.62,.5,12),new THREE.MeshLambertMaterial({color:0x8B0000}));sash.position.y=.9;
-const head=new THREE.Mesh(new THREE.SphereGeometry(.38,16,12),new THREE.MeshLambertMaterial({color:0xf2c9a0}));head.position.y=2.0;
-const halo=new THREE.Mesh(new THREE.TorusGeometry(.6,.05,8,24),new THREE.MeshBasicMaterial({color:0xfbbf24}));halo.position.y=2.65;halo.rotation.x=Math.PI/2;
-monk.add(robe,sash,head,halo);monk.traverse(m=>{if(m.isMesh)m.castShadow=true});
-monk.scale.setScalar(1.25);monk.position.set(0,0,10);scene.add(monk);
+
+// 1. 身體細節：多層次袈裟、黃色內襯與立體腰帶
+const robe=new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.6, 0.8, 16),new THREE.MeshLambertMaterial({color:0xea8a1b}));robe.position.y=0.4;
+const innerRobe=new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.3, 0.2, 16),new THREE.MeshLambertMaterial({color:0xffd166}));innerRobe.position.y=0.8;
+const sash=new THREE.Mesh(new THREE.TorusGeometry(0.42, 0.06, 12, 16),new THREE.MeshLambertMaterial({color:0x8B0000}));sash.position.y=0.5; sash.rotation.x = Math.PI/2;
+
+// 2. 超大圓潤頭部與精緻五官 (水汪汪大眼與害羞粉紅腮紅)
+const head=new THREE.Mesh(new THREE.SphereGeometry(0.65, 32, 24),new THREE.MeshLambertMaterial({color:0xffe4c4}));head.position.y=1.35;
+
+const eyeGeom = new THREE.SphereGeometry(0.08, 16, 16);
+const eyeMat = new THREE.MeshLambertMaterial({color:0x1a1a1a}); // 眼睛
+const leftEye = new THREE.Mesh(eyeGeom, eyeMat); leftEye.position.set(-0.25, 1.45, 0.58);
+const rightEye = new THREE.Mesh(eyeGeom, eyeMat); rightEye.position.set(0.25, 1.45, 0.58);
+
+// 壓扁的橢圓形腮紅
+const blushGeom = new THREE.SphereGeometry(0.1, 16, 16);
+const blushMat = new THREE.MeshBasicMaterial({color:0xff8888, transparent:true, opacity:0.5});
+const leftBlush = new THREE.Mesh(blushGeom, blushMat); leftBlush.position.set(-0.4, 1.25, 0.53); leftBlush.scale.set(1.5, 0.8, 0.2);
+const rightBlush = new THREE.Mesh(blushGeom, blushMat); rightBlush.position.set(0.4, 1.25, 0.53); rightBlush.scale.set(1.5, 0.8, 0.2);
+
+// 3. 手臂與小圓手
+const armMat = new THREE.MeshLambertMaterial({color:0xea8a1b});
+const handMat = new THREE.MeshLambertMaterial({color:0xffe4c4});
+const leftArm = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.06, 0.4, 8), armMat);
+leftArm.position.set(-0.45, 0.6, 0.15); leftArm.rotation.z = Math.PI/4; leftArm.rotation.x = -Math.PI/6;
+const leftHand = new THREE.Mesh(new THREE.SphereGeometry(0.1, 12, 12), handMat);
+leftHand.position.set(-0.6, 0.45, 0.3);
+
+const rightArm = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.06, 0.4, 8), armMat);
+rightArm.position.set(0.45, 0.6, 0.15); rightArm.rotation.z = -Math.PI/4; rightArm.rotation.x = -Math.PI/6;
+const rightHand = new THREE.Mesh(new THREE.SphereGeometry(0.1, 12, 12), handMat);
+rightHand.position.set(0.6, 0.45, 0.3);
+
+// 4. 精緻配件：一把迷你的 Q 版黃金錫杖 (法杖)
+const staffGroup = new THREE.Group();
+const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 1.8, 8), new THREE.MeshLambertMaterial({color:0x4a3320}));
+pole.position.y = 0.9;
+const ringTop = new THREE.Mesh(new THREE.TorusGeometry(0.15, 0.025, 8, 16), new THREE.MeshLambertMaterial({color:0xffd700, emissive:0x443300}));
+ringTop.position.y = 1.8;
+staffGroup.add(pole, ringTop);
+staffGroup.position.set(0.7, 0, 0.35); // 放置在右手邊
+
+// 5. 佛光環加上自發光質感
+const halo=new THREE.Mesh(new THREE.TorusGeometry(0.85, 0.05, 16, 32),new THREE.MeshLambertMaterial({color:0xfbbf24, emissive:0x664400}));
+halo.position.y=2.15; halo.rotation.x=Math.PI/2;
+
+monk.add(robe, innerRobe, sash, head, leftEye, rightEye, leftBlush, rightBlush, leftArm, rightArm, leftHand, rightHand, staffGroup, halo);
+monk.traverse(m=>{if(m.isMesh)m.castShadow=true});
+monk.scale.setScalar(1.3); 
+monk.position.set(0,0,10);scene.add(monk);
 
 // ---- camera orbit ----
 let az=.7,el=.95,dist=W()/H()<1?52:40;const tgt=new THREE.Vector3(0,2,6),goal=new THREE.Vector3();
